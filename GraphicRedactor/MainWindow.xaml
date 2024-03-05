@@ -1,0 +1,140 @@
+﻿<Window x:Class="GraphicRedactor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphicRedactor"
+        mc:Ignorable="d"
+        Title="Графический редактор" Height="720" Width="1280">
+    
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="DefaultButton">
+            <Setter Property="Background" Value="#21295C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1C7293"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="DefaultTextBlock">
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="DefaultTextBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="80*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Menu -->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Режим работы" Style="{StaticResource DefaultTextBlock}"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+    
+                <ComboBox Grid.Column="0" x:Name="ModeComboBox" SelectionChanged="ModeComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Создание" IsSelected="True" Name="DrawComboBoxItem"/>
+                    <ComboBoxItem Content="Редактирование" Name="EditComboBoxItem"/>
+                    <ComboBoxItem Content="Группировка" Name="GroupComboBoxItem"/>
+                </ComboBox>
+            </Grid>
+
+            <Grid Grid.Row="0">
+                <Menu VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="LightGray">
+                    <MenuItem Header="Файл">
+                        <MenuItem Header="Сохранить" Name="SaveMenuItem" Click="SaveMenuItem_Click"></MenuItem>
+                        <MenuItem Header="Загрузить" Name="UploadMenuItem" Click="UploadMenuItem_Click"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Действия">
+                        <MenuItem Header="Выделить все объекты" Name="SelectAllMenuItem" Click="SelectAllMenuItem_Click"></MenuItem>
+                        <MenuItem Header="Cнять выделение со всех объектов" Name="RemoveSelectAllMenuItem" Click="RemoveSelectAllMenuItem_Click"></MenuItem>
+                        <MenuItem Header="Удалить все элементы" Name="DeleteAllMenuItem" Click="DeleteAllMenuItem_Click"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Координаты">
+                        <MenuItem Header="Вывести двухмерную систему координат" Name="ShowTwoDimension" Click="ShowTwoDimension_Click"/>
+                        <MenuItem Header="Убрать двухмерную систему координат" Name="UnshowTwoDimension" Click="UnshowTwoDimension_Click"/>
+                    </MenuItem>
+                </Menu>
+            </Grid>
+        </Grid>
+
+        <!-- Content -->
+        <Grid Grid.Row="1">
+            <Border BorderBrush="Black" BorderThickness="1" ClipToBounds="True ">
+                <Canvas Name="DrawingCanvas" MouseLeftButtonDown="DrawingCanvas_MouseLeftButtonDown" MouseMove="DrawingCanvas_MouseMove" MouseLeftButtonUp="DrawingCanvas_MouseLeftButtonUp" MouseRightButtonDown="DrawingCanvas_MouseRightButtonDown" Background="White"/>
+            </Border>
+        </Grid>
+
+        <!-- Footer -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="А" Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Column="0" Grid.Row="1" Name="CoordinatesTextBlockA" Style="{StaticResource DefaultTextBox}"/>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="B" Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Name="CoordinatesTextBlockB" Style="{StaticResource DefaultTextBox}"/>
+
+            <TextBlock Grid.Column="2" Grid.Row="0" Text="C" Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Column="2" Grid.Row="1" Name="CoordinatesTextBlockC" Style="{StaticResource DefaultTextBox}"/>
+
+            <TextBlock Grid.Column="3" Grid.Row="0" Text="Уравнение" Style="{StaticResource DefaultTextBlock}"/>
+            <TextBox Grid.Column="3" Grid.Row="1" Name="CoordinatesTextBlockSum" Style="{StaticResource DefaultTextBox}"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<CanvasData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Lines>
+    <LineData>
+      <X1>146</X1>
+      <Y1>114</Y1>
+      <X2>337</X2>
+      <Y2>119</Y2>
+    </LineData>
+    <LineData>
+      <X1>183</X1>
+      <Y1>161</Y1>
+      <X2>366</X2>
+      <Y2>176</Y2>
+    </LineData>
+    <LineData>
+      <X1>50</X1>
+      <Y1>211</Y1>
+      <X2>252</X2>
+      <Y2>223</Y2>
+    </LineData>
+  </Lines>
+</CanvasData>
