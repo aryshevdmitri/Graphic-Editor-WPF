@@ -14,8 +14,9 @@ namespace GraphicRedactor
 {
     public partial class MainWindow : Window
     {
-        private SolidColorBrush originalLineColor = Brushes.Black;
+        private SolidColorBrush lineColor = Brushes.Black;
         private SolidColorBrush focusLineColor = Brushes.Red;
+        private double lineThickness = 2;
 
         private Line xAxis;
         private Line yAxis;
@@ -27,7 +28,6 @@ namespace GraphicRedactor
         private bool isDrawing = false;
         private bool isDragging = false;
         private bool isDraggingEllipse = false;
-        private bool isDraggingGroup = false;
 
         private Point startPoint;
         private Line currentLine;
@@ -104,7 +104,7 @@ namespace GraphicRedactor
                             X2 = lineData.X2,
                             Y2 = lineData.Y2,
                             Stroke = Brushes.Black,
-                            StrokeThickness = 2
+                            StrokeThickness = lineThickness
                         };
 
                         DrawingCanvas.Children.Add(line);
@@ -119,16 +119,16 @@ namespace GraphicRedactor
         {
             startEllipse = new Ellipse
             {
-                Width = 10,
-                Height = 10,
+                Width = 10 + lineThickness,
+                Height = 10 + lineThickness,
                 Fill = focusLineColor,
                 Visibility = Visibility.Hidden,
             };
 
             endEllipse = new Ellipse
             {
-                Width = 10,
-                Height = 10,
+                Width = 10 + lineThickness,
+                Height = 10 + lineThickness,
                 Fill = focusLineColor,
                 Visibility = Visibility.Hidden,
             };
@@ -181,13 +181,13 @@ namespace GraphicRedactor
                 {
                     if (item is Line line)
                     {
-                        line.Stroke = originalLineColor;
+                        line.Stroke = lineColor;
 
                         // Находим эллипсы для каждой линии
                         var startEllipse = DrawingCanvas.Children.OfType<Ellipse>().FirstOrDefault(ellipse =>
-                            Canvas.GetLeft(ellipse) == line.X1 - 5 && Canvas.GetTop(ellipse) == line.Y1 - 5);
+                            Canvas.GetLeft(ellipse) == line.X1 - 3 - lineThickness && Canvas.GetTop(ellipse) == line.Y1 - 3 - lineThickness);
                         var endEllipse = DrawingCanvas.Children.OfType<Ellipse>().FirstOrDefault(ellipse =>
-                            Canvas.GetLeft(ellipse) == line.X2 - 5 && Canvas.GetTop(ellipse) == line.Y2 - 5);
+                            Canvas.GetLeft(ellipse) == line.X2 - 3 - lineThickness && Canvas.GetTop(ellipse) == line.Y2 - 3 - lineThickness);
 
                         // Удаляем эллипсы с холста
                         if (startEllipse != null)
@@ -221,7 +221,12 @@ namespace GraphicRedactor
                         case "Создание":
                             isCreating = true;
                             isEditing = false;
-                            isGrouping = false;
+                           
+                            if (isGrouping)
+                            {
+                                ClearGroup();
+                                isGrouping = false;
+                            }
 
                             if (startEllipse != null && endEllipse != null)
                             {
@@ -229,16 +234,19 @@ namespace GraphicRedactor
                                 endEllipse.Visibility = Visibility.Hidden;
                             }
                             else
-                            {
                                 InitializeEllipses();
-                            }
 
-                            ClearGroup();
                             break;
                         case "Редактирование":
+
                             isEditing = true;
                             isCreating = false;
-                            isGrouping = false;
+
+                            if (isGrouping)
+                            {
+                                ClearGroup();
+                                isGrouping = false;
+                            }
 
                             if (startEllipse != null && endEllipse != null && selectedLine != null)
                             {
@@ -247,11 +255,9 @@ namespace GraphicRedactor
                                 endEllipse.Visibility = Visibility.Hidden;
                             }
                             else
-                            {
                                 InitializeEllipses();
-                            }
 
-                            ClearGroup();
+                            groupElements.Clear();
                             break;
                         case "Группировка":
                             isGrouping = true;
@@ -313,6 +319,46 @@ namespace GraphicRedactor
             }
         }
 
+        private void LineValueSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            lineThickness = e.NewValue;
+            InitializeEllipses();
+        }
+
+        private void LineColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                var selectedItem = comboBox.SelectedItem as ComboBoxItem;
+
+                if (selectedItem != null)
+                {
+                    var stackPanel = selectedItem.Content as StackPanel;
+                    if (stackPanel != null)
+                    {
+                        var textBlock = stackPanel.Children[1] as TextBlock;
+                        var colorName = textBlock.Text;
+
+                        switch (colorName)
+                        {
+                            case "Black":
+                                lineColor = Brushes.Black;
+                                break;
+                            case "Green":
+                                lineColor = Brushes.Green;
+                                break;
+                            case "Red":
+                                lineColor = Brushes.Tomato;
+                                break;
+                            case "Blue":
+                                lineColor = Brushes.Blue;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             CanvasData canvasData = new CanvasData();
@@ -355,7 +401,7 @@ namespace GraphicRedactor
             {
                 if (item is Line line)
                 {
-                    line.Stroke = originalLineColor;
+                    line.Stroke = lineColor;
 
                     // Удаляем эллипсы с холста
                     if (startEllipse != null)
@@ -385,7 +431,7 @@ namespace GraphicRedactor
                 X2 = DrawingCanvas.ActualWidth,
                 Y2 = DrawingCanvas.ActualHeight / 2,
                 Stroke = Brushes.Black,
-                StrokeThickness = 2
+                StrokeThickness = 1
             };
 
             // Создаем линию для оси Y
@@ -396,7 +442,7 @@ namespace GraphicRedactor
                 X2 = DrawingCanvas.ActualWidth / 2,
                 Y2 = DrawingCanvas.ActualHeight,
                 Stroke = Brushes.Black,
-                StrokeThickness = 2
+                StrokeThickness = 1
             };
 
             // Добавляем линии на холст
@@ -423,8 +469,8 @@ namespace GraphicRedactor
                     Y1 = startPoint.Y,
                     X2 = startPoint.X,
                     Y2 = startPoint.Y,
-                    Stroke = originalLineColor,
-                    StrokeThickness = 2
+                    Stroke = lineColor,
+                    StrokeThickness = lineThickness
                 };
 
                 DrawingCanvas.Children.Add(currentLine);
@@ -444,7 +490,7 @@ namespace GraphicRedactor
                     if (selectedLine != null && selectedLine != newlySelectedLine)
                     {
                         // Если да, возвращаем ее к исходному цвету
-                        selectedLine.Stroke = originalLineColor;
+                        selectedLine.Stroke = lineColor;
                     }
 
                     // Обновляем выбранную линию
