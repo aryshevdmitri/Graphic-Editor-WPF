@@ -14,6 +14,9 @@ namespace GraphicRedactor
 {
     public partial class MainWindow : Window
     {
+        private SolidColorBrush originalLineColor = Brushes.Black;
+        private SolidColorBrush focusLineColor = Brushes.Red;
+
         private Line xAxis;
         private Line yAxis;
 
@@ -21,12 +24,10 @@ namespace GraphicRedactor
         private bool isEditing = false;
         private bool isGrouping = false;
 
-        private SolidColorBrush originalLineColor = Brushes.Black;
-        private SolidColorBrush focusLineColor = Brushes.Red;
-
         private bool isDrawing = false;
         private bool isDragging = false;
         private bool isDraggingEllipse = false;
+        private bool isDraggingGroup = false;
 
         private Point startPoint;
         private Line currentLine;
@@ -36,7 +37,7 @@ namespace GraphicRedactor
         private Ellipse selectedEllipse;
         private Ellipse startEllipse;
         private Ellipse endEllipse;
-
+            
         private List<UIElement> groupElements = new List<UIElement>();
 
         public MainWindow()
@@ -285,7 +286,7 @@ namespace GraphicRedactor
 
                 if (selectedItem != null)
                 {
-                    string header = selectedItem.Content.ToString(); 
+                    string header = selectedItem.Content.ToString();
 
                     switch (header)
                     {
@@ -317,7 +318,7 @@ namespace GraphicRedactor
             CanvasData canvasData = new CanvasData();
             SaveCanvasData(canvasData);
         }
-        
+
         private void UploadMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DrawingCanvas.Children.Clear();
@@ -337,12 +338,12 @@ namespace GraphicRedactor
                 if (item is Line line)
                 {
                     line.Stroke = focusLineColor;
-    
+
                     groupElements.Add(line);
                 }
             }
         }
-        
+
         private void RemoveSelectAllMenuItem_Click(object sender, RoutedEventArgs e)
         {
             groupElements.Clear();
@@ -369,7 +370,7 @@ namespace GraphicRedactor
                 }
             }
         }
-        
+
         private void DeleteAllMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DrawingCanvas.Children.Clear();
@@ -481,34 +482,15 @@ namespace GraphicRedactor
             if (isGrouping)
             {
                 Point mousePosition = e.GetPosition(DrawingCanvas);
-                Line selectedLine = GetLineUnderMouse(mousePosition);
+                selectedLine = GetLineUnderMouse(mousePosition);
 
-                if (e.Source is Ellipse) { }
-                else
+                if (selectedLine != null && !groupElements.Contains(selectedLine))
                 {
+                    // Перемещение группы линий начинается при нажатии на выбранную линию из группы
+                    selectedLine.Stroke = focusLineColor;
+                    groupElements.Add(selectedLine);
 
-                    if (selectedLine != null)
-                    {
-                        // Если линия была выбрана, меняем ее цвет на цвет фокуса
-                        selectedLine.Stroke = focusLineColor;
-
-                        // Добавляем выбранную линию в groupElements, если ее там еще нет
-                        if (!groupElements.Contains(selectedLine))
-                        {
-                            groupElements.Add(selectedLine);
-                        }
-
-                        if (startEllipse != null && endEllipse != null)
-                        {
-                            startEllipse.Visibility = Visibility.Visible;
-                            endEllipse.Visibility = Visibility.Visible;
-
-                            Canvas.SetLeft(startEllipse, selectedLine.X1 - 5);
-                            Canvas.SetTop(startEllipse, selectedLine.Y1 - 5);
-                            Canvas.SetLeft(endEllipse, selectedLine.X2 - 5);
-                            Canvas.SetTop(endEllipse, selectedLine.Y2 - 5);
-                        }
-                    }
+                    startPoint = mousePosition;
                 }
             }
         }
@@ -554,38 +536,25 @@ namespace GraphicRedactor
                 }
             }
 
-            if (isGrouping && e.LeftButton == MouseButtonState.Pressed)
+            if (isGrouping && selectedLine != null && e.LeftButton == MouseButtonState.Pressed)
             {
-                if (startEllipse != null && endEllipse != null)
-                {
-                    startEllipse.Visibility = Visibility.Hidden;
-                    endEllipse.Visibility = Visibility.Hidden;
-                }
+                Point mousePosition = e.GetPosition(DrawingCanvas);
+                double deltaX = mousePosition.X - startPoint.X;
+                double deltaY = mousePosition.Y - startPoint.Y;
 
-                if (groupElements.Count != 0)
+                foreach (var element in groupElements)
                 {
-                    Point mousePosition = e.GetPosition(DrawingCanvas);
-                    double deltaX = mousePosition.X - startPoint.X;
-                    double deltaY = mousePosition.Y - startPoint.Y;
-
-                    foreach (var element in groupElements)
+                    if (element is Line line)
                     {
-                        if (element is Line line)
-                        {
-                            line.X1 += deltaX;
-                            line.Y1 += deltaY;
-                            line.X2 += deltaX;
-                            line.Y2 += deltaY;
-                        }
-                        else if (element is Ellipse ellipse)
-                        {
-                            Canvas.SetLeft(ellipse, Canvas.GetLeft(ellipse) + deltaX);
-                            Canvas.SetTop(ellipse, Canvas.GetTop(ellipse) + deltaY);
-                        }
+                        // Обновляем позиции всех линий в группе на основе смещения мыши относительно начальной позиции выбранной линии
+                        line.X1 += deltaX;
+                        line.Y1 += deltaY;
+                        line.X2 += deltaX;
+                        line.Y2 += deltaY;
                     }
-
-                    startPoint = mousePosition;
                 }
+
+                startPoint = mousePosition;
             }
         }
 
@@ -597,19 +566,14 @@ namespace GraphicRedactor
             isDragging = false;
             isDraggingEllipse = false;
 
-            if (isEditing && selectedLine != null)
+            if (isGrouping | isEditing && selectedLine != null)
             {
                 CoordinatesTextBlockA.Text = $"{selectedLine.Y2 - selectedLine.Y1}";
                 CoordinatesTextBlockB.Text = $"{selectedLine.X1 - selectedLine.X2}";
                 CoordinatesTextBlockC.Text = $"{selectedLine.X2 * selectedLine.Y1 - selectedLine.X1 * selectedLine.Y2}";
                 CoordinatesTextBlockSum.Text = $"{selectedLine.Y2 - selectedLine.Y1}x + {selectedLine.X1 - selectedLine.X2}y + {selectedLine.X2 * selectedLine.Y1 - selectedLine.X1 * selectedLine.Y2} = 0";
-
-                //    CoordinatesTextBlockX1.Text = selectedLine.X1.ToString();
-                //    CoordinatesTextBlockY1.Text = selectedLine.Y2.ToString();
-                //    CoordinatesTextBlockX2.Text = selectedLine.X2.ToString();
-                //    CoordinatesTextBlockY2.Text = selectedLine.Y2.ToString();
-                }
             }
+        }
 
         private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
