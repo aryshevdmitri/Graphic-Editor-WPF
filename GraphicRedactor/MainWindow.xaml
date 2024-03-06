@@ -68,6 +68,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Режим работы" Style="{StaticResource DefaultTextBlock}"/>
+                <TextBlock Grid.Column="1" Text="Операция" Style="{StaticResource DefaultTextBlock}"/>
             </Grid>
 
             <Grid Grid.Row="2">
@@ -82,6 +83,15 @@
                     <ComboBoxItem Content="Создание" IsSelected="True" Name="DrawComboBoxItem"/>
                     <ComboBoxItem Content="Редактирование" Name="EditComboBoxItem"/>
                     <ComboBoxItem Content="Группировка" Name="GroupComboBoxItem"/>
+                </ComboBox>
+
+                <ComboBox Grid.Column="1" x:Name="OperationComboBox" SelectionChanged="OperationComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Выберите операцию" IsSelected="True" Name="ChooseOperationComboBoxItem"/>
+                    <ComboBoxItem Content="Смещение" Name="TransferComboBoxItem"/>
+                    <ComboBoxItem Content="Масштабирование" Name="ScalingComboBoxItem"/>
+                    <ComboBoxItem Content="Вращение" Name="RotationComboBoxItem"/>
+                    <ComboBoxItem Content="Зеркалирование" Name="MirroringComboBoxItem"/>
+                    <ComboBoxItem Content="Проецирование" Name="Projection"/>
                 </ComboBox>
             </Grid>
 

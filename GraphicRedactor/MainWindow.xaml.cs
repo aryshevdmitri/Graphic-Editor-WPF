@@ -12,9 +12,6 @@ using System.Xml.Serialization;
 
 namespace GraphicRedactor
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private Line xAxis;
@@ -277,7 +274,44 @@ namespace GraphicRedactor
                 }
             }
         }
-        
+
+        private void OperationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            if (comboBox != null && comboBox.SelectedItem != null)
+            {
+                ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
+
+                if (selectedItem != null)
+                {
+                    string header = selectedItem.Content.ToString(); 
+
+                    switch (header)
+                    {
+                        case "Выберите операцию":
+
+                            break;
+                        case "Смещение":
+
+                            break;
+                        case "Масштабирование":
+
+                            break;
+                        case "Вращение":
+
+                            break;
+                        case "Зеркалирование":
+
+                            break;
+                        case "Проецирование":
+
+                            break;
+                    }
+                }
+            }
+        }
+
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             CanvasData canvasData = new CanvasData();
@@ -286,6 +320,7 @@ namespace GraphicRedactor
         
         private void UploadMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            DrawingCanvas.Children.Clear();
             // Вызываем метод LoadCanvasData для загрузки данных из файла
             CanvasData loadedCanvasData = LoadCanvasData();
         }
