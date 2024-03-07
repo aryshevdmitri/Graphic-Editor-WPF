@@ -13,12 +13,7 @@ C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\GraphicRed
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\GraphicRedactor.csproj.CoreCompileInputs.cache
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\GraphicRedactor.exe
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\GraphicRedactor.pdb
-C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\MaterialDesignColors.dll
-C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\MaterialDesignThemes.Wpf.dll
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\Microsoft.Xaml.Behaviors.dll
-C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\MaterialDesignColors.pdb
-C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\MaterialDesignThemes.Wpf.pdb
-C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\MaterialDesignThemes.Wpf.xml
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\Microsoft.Xaml.Behaviors.xml
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\App.baml

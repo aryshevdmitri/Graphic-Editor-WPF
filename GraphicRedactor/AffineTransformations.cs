@@ -10,6 +10,7 @@ namespace GraphicRedactor
 {
     internal class AffineTransformations
     {
+        // 3D смещение
         public static void Transfer(ref double x, ref double y, ref double z, double m, double n, double k)
         {
             x += m;
@@ -17,6 +18,14 @@ namespace GraphicRedactor
             z += k;
         }
 
+        // 2D смещение
+        public static void Transfer(ref double x, ref double y, double m, double n)
+        {
+            x += m;
+            y += n;
+        }
+
+        // 3D масштабирование
         public static void Scaling(ref double x, ref double y, ref double z, double a, double d, double e)
         {
             x *= a;
@@ -24,6 +33,14 @@ namespace GraphicRedactor
             z *= e;
         }
 
+        // 2D масштабирование
+        public static void Scaling(ref double x, ref double y, double a, double d)
+        {
+            x *= a;
+            y *= d;
+        }
+
+        // 3D полное масштабирование
         public static void Scaling(ref double x, ref double y, ref double z, double s)
         {
             if (s != 0)
@@ -34,6 +51,17 @@ namespace GraphicRedactor
             }
         }
 
+        // 2D полное масштабирование
+        public static void Scaling(ref double x, ref double y, double s)
+        {
+            if (s != 0)
+            {
+                x /= s;
+                y /= s;
+            }
+        }
+
+        // 3D вращение
         public static void Rotation(ref double x, ref double y, ref double z, int angle, char axis)
         {
             Matrix3D operation = new Matrix3D();
@@ -73,6 +101,7 @@ namespace GraphicRedactor
             z = result.M13;
         }
 
+        // 3D зеркалирование
         public static void Mirroring(ref double x, ref double y, ref double z, char axis)
         {
             switch (axis)
@@ -89,7 +118,28 @@ namespace GraphicRedactor
             }
         }
 
-        // 2D, force to 3D
+        // 2D зеркалирование
+        public static void Mirroring(ref double x, ref double y, char axis)
+        {
+            switch (axis)
+            {
+                case 'x':
+                    x = -x;
+                    break;
+                case 'y':
+                    y = -y;
+                    break;
+            }
+        }
+
+        // 3D проецирование (не сделано)
+        public static void Projection(ref double x, ref double y, ref double z, double p, double q)
+        {
+            x /= x * p + y * q + 1;
+            y /= x * p + y * q + 1;
+        }
+
+        // 2D проецирование
         public static void Projection(ref double x, ref double y, double p, double q)
         {
             x /= x * p + y * q + 1;

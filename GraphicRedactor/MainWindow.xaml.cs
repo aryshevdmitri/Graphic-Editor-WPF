@@ -296,9 +296,6 @@ namespace GraphicRedactor
 
                     switch (header)
                     {
-                        case "Выберите операцию":
-
-                            break;
                         case "Смещение":
 
                             break;
@@ -415,11 +412,35 @@ namespace GraphicRedactor
                     }
                 }
             }
+
+            CoordinatesTextBlockA.Text = "A";
+            CoordinatesTextBlockB.Text = "B";
+            CoordinatesTextBlockC.Text = "C";
+            CoordinatesTextBlockSum.Text = "Уравнение";
+
+            CoordinatesTextBlockX1.Text = "X1";
+            CoordinatesTextBlockX2.Text = "X2";
+            CoordinatesTextBlockY1.Text = "Y1";
+            CoordinatesTextBlockY2.Text = "Y2";
+            CoordinatesTextBlockZ1.Text = "Z1";
+            CoordinatesTextBlockZ2.Text = "Z2";
         }
 
         private void DeleteAllMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DrawingCanvas.Children.Clear();
+
+            CoordinatesTextBlockA.Text = "A";
+            CoordinatesTextBlockB.Text = "B";
+            CoordinatesTextBlockC.Text = "C";
+            CoordinatesTextBlockSum.Text = "Уравнение";
+
+            CoordinatesTextBlockX1.Text = "X1";
+            CoordinatesTextBlockX2.Text = "X2";
+            CoordinatesTextBlockY1.Text = "Y1";
+            CoordinatesTextBlockY2.Text = "Y2";
+            CoordinatesTextBlockZ1.Text = "Z1";
+            CoordinatesTextBlockZ2.Text = "Z2";
         }
 
         private void ShowTwoDimension_Click(object sender, RoutedEventArgs e)
@@ -618,6 +639,11 @@ namespace GraphicRedactor
                 CoordinatesTextBlockB.Text = $"{selectedLine.X1 - selectedLine.X2}";
                 CoordinatesTextBlockC.Text = $"{selectedLine.X2 * selectedLine.Y1 - selectedLine.X1 * selectedLine.Y2}";
                 CoordinatesTextBlockSum.Text = $"{selectedLine.Y2 - selectedLine.Y1}x + {selectedLine.X1 - selectedLine.X2}y + {selectedLine.X2 * selectedLine.Y1 - selectedLine.X1 * selectedLine.Y2} = 0";
+
+                CoordinatesTextBlockX1.Text = $"{selectedLine.X1}";
+                CoordinatesTextBlockX2.Text = $"{selectedLine.X2}";
+                CoordinatesTextBlockY1.Text = $"{selectedLine.Y1}";
+                CoordinatesTextBlockY2.Text = $"{selectedLine.Y2}";
             }
         }
 
