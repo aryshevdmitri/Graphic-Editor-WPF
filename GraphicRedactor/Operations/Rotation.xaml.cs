@@ -28,7 +28,7 @@ namespace GraphicRedactor
 
         private void ButtonContinue_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(TextBoxA.Text, out int a))
+            if (int.TryParse(TextBoxA.Text, out int a) && a != 0)
             {
                 A = a;
 

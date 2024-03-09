@@ -27,4 +27,7 @@ C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Transfer.baml
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Rotation.g.cs
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Rotation.baml
-C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Mirroring.g.cs
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Mirroring.baml
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Projection.g.cs
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Projection.baml

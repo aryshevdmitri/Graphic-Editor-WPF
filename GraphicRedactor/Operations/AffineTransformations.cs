@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -19,7 +15,7 @@ namespace GraphicRedactor
         }
 
         // 2D смещение
-        public static (double,double) Transfer(double x, double y, double m, double n)
+        public static (double, double) Transfer(double x, double y, double m, double n)
         {
             x += m;
             y += n;
@@ -141,17 +137,14 @@ namespace GraphicRedactor
         }
 
         // 2D зеркалирование
-        public static void Mirroring(ref double x, ref double y, char axis)
+        public static (double, double) Mirroring(double x, double y, char axis)
         {
-            switch (axis)
-            {
-                case 'x':
-                    x = -x;
-                    break;
-                case 'y':
-                    y = -y;
-                    break;
-            }
+            if (axis == 'x')
+                x = -x;
+            else
+                y = -y;
+
+            return (x, y);
         }
 
         // 3D проецирование (не сделано)
@@ -162,10 +155,12 @@ namespace GraphicRedactor
         }
 
         // 2D проецирование
-        public static void Projection(ref double x, ref double y, double p, double q)
+        public static (double, double) Projection(double x, double y, double p, double q)
         {
             x /= x * p + y * q + 1;
             y /= x * p + y * q + 1;
+
+            return (x, y);
         }
     }
 }

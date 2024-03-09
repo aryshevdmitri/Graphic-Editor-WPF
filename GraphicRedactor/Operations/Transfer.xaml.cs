@@ -29,7 +29,7 @@ namespace GraphicRedactor
 
         private void ButtonContinue_Click(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(TextBoxM.Text, out double m) && double.TryParse(TextBoxN.Text, out double n))
+            if (double.TryParse(TextBoxM.Text, out double m) && double.TryParse(TextBoxN.Text, out double n) && m != 0 && n != 0)
             {
                 M = m;
                 N = n;

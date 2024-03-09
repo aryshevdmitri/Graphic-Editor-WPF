@@ -44,7 +44,6 @@ namespace GraphicRedactor
         {
             InitializeComponent();
             InitializeEllipses();
-            InitializeCoordinates();
         }
 
         public void SaveCanvasData(CanvasData canvasData)
@@ -147,15 +146,6 @@ namespace GraphicRedactor
             }
         }
 
-        private void InitializeCoordinates()
-        {
-            double centerX = DrawingCanvas.Width / 2;
-            double centerY = DrawingCanvas.Height / 2;
-
-            // Устанавливаем центр холста как координаты (0, 0)
-            DrawingCanvas.RenderTransform = new TranslateTransform(-centerX, -centerY);
-        }
-
         private Line GetLineUnderMouse(Point mousePosition)
         {
             // Проверяем, попала ли мышь в какую-либо линию на холсте
@@ -216,13 +206,9 @@ namespace GraphicRedactor
 
         private void ModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-
-            if (comboBox != null && comboBox.SelectedItem != null)
+            if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
             {
-                ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
-
-                if (selectedItem != null)
+                if (comboBox.SelectedItem is ComboBoxItem selectedItem)
                 {
                     string header = selectedItem.Content.ToString();
 
@@ -294,13 +280,9 @@ namespace GraphicRedactor
 
         private void OperationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-
-            if (comboBox != null && comboBox.SelectedItem != null)
+            if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
             {
-                ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
-
-                if (selectedItem != null && groupElements.Count > 0)
+                if (comboBox.SelectedItem is ComboBoxItem selectedItem && groupElements.Count > 0)
                 {
                     string header = selectedItem.Content.ToString();
 
@@ -362,17 +344,33 @@ namespace GraphicRedactor
                             }
 
                             break;
-                            //case "Вращение":
-                            //    AffineTransformations.Rotation
-                            //    break;
-                            //case "Зеркалирование":
-                            //    AffineTransformations.Mirroring
-                            //    break;
-                            //case "Проецирование":
-                            //    AffineTransformations.Projection
-                            //    break;
+                        case "Зеркалирование":
+                            Mirroring mirroringWindow = new Mirroring();
+                            mirroringWindow.ShowDialog();
 
-                            
+                            char mirroringAxis = mirroringWindow.Axis;
+
+                            foreach (Line line in groupElements)
+                            {
+                                (line.X1, line.Y1) = AffineTransformations.Mirroring(line.X1, line.Y1, mirroringAxis);
+                                (line.X2, line.Y2) = AffineTransformations.Mirroring(line.X2, line.Y2, mirroringAxis);
+                            }
+
+                            break;
+                        case "Проецирование":
+                            Projection projectionWindow = new Projection();
+                            projectionWindow.ShowDialog();
+
+                            double projectionP = projectionWindow.P;
+                            double projectionQ = projectionWindow.Q;
+
+                            foreach (Line line in groupElements)
+                            {
+                                (line.X1, line.Y1) = AffineTransformations.Projection(line.X1, line.Y1, projectionP, projectionQ);
+                                (line.X2, line.Y2) = AffineTransformations.Projection(line.X2, line.Y2, projectionP, projectionQ);
+                            }
+
+                            break;
                     }
 
                     OperationComboBox.SelectedItem = null;
@@ -429,7 +427,6 @@ namespace GraphicRedactor
         private void UploadMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DrawingCanvas.Children.Clear();
-            // Вызываем метод LoadCanvasData для загрузки данных из файла
             CanvasData loadedCanvasData = LoadCanvasData();
         }
 

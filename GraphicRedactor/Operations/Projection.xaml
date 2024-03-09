@@ -1,11 +1,11 @@
-﻿<Window x:Class="GraphicRedactor.Rotation"
+﻿<Window x:Class="GraphicRedactor.Projection"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicRedactor"
         mc:Ignorable="d"
-        Title="Вращение" Height="200" Width="400">
+        Title="Проецирование" Height="200" Width="400">
     <Window.Resources>
         <Style x:Key="HintTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Template">
@@ -39,16 +39,21 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock Text="Выбрана операция вращения, введите значение a"/>
+            <TextBlock Text="Выбрана операция проецирование, введите значения p и q"/>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <TextBox Name="TextBoxA" Tag="a"  Style="{StaticResource HintTextBox}"/>
+                <TextBox Name="TextBoxP" Tag="p"  Style="{StaticResource HintTextBox}"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <TextBox Name="TextBoxQ" Tag="q" Style="{StaticResource HintTextBox}"/>
             </Grid>
         </Grid>
 

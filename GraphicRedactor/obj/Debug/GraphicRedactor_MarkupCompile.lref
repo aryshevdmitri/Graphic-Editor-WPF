@@ -1,8 +1,10 @@
 ﻿
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\App.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Mirroring.xaml;;
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\FullScaling.xaml;;
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\MainWindow.xaml;;
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Scaling.xaml;;
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Transfer.xaml;;
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Rotation.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Projection.xaml;;
 

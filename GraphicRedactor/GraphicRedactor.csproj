@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Operations\Mirroring.xaml.cs">
+      <DependentUpon>Mirroring.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Operations\FullScaling.xaml.cs">
       <DependentUpon>FullScaling.xaml</DependentUpon>
     </Compile>
@@ -73,6 +76,10 @@
     <Compile Include="Operations\Transfer.xaml.cs">
       <DependentUpon>Transfer.xaml</DependentUpon>
     </Compile>
+    <Page Include="Operations\Mirroring.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Operations\FullScaling.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,6 +96,9 @@
     <Compile Include="Operations\Rotation.xaml.cs">
       <DependentUpon>Rotation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Projection.xaml.cs">
+      <DependentUpon>Projection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaveData.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -103,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Operations\Rotation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Operations\Projection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

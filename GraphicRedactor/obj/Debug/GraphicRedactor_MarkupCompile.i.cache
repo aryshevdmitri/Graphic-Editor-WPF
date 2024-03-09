@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\App.xaml
-51640413149
+7-1423894721
 
-12-2128110921
+14-1318428371
 15-2078077529
-Operations\FullScaling.xaml;MainWindow.xaml;Operations\Scaling.xaml;Operations\Transfer.xaml;Operations\Rotation.xaml;
+Operations\Mirroring.xaml;Operations\FullScaling.xaml;MainWindow.xaml;Operations\Scaling.xaml;Operations\Transfer.xaml;Operations\Rotation.xaml;Operations\Projection.xaml;
 
-True
+False
 
