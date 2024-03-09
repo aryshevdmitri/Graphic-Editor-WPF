@@ -19,10 +19,12 @@ namespace GraphicRedactor
         }
 
         // 2D смещение
-        public static void Transfer(ref double x, ref double y, double m, double n)
+        public static (double,double) Transfer(double x, double y, double m, double n)
         {
             x += m;
             y += n;
+
+            return (x, y);
         }
 
         // 3D масштабирование
@@ -34,10 +36,12 @@ namespace GraphicRedactor
         }
 
         // 2D масштабирование
-        public static void Scaling(ref double x, ref double y, double a, double d)
+        public static (double, double) Scaling(double x, double y, double a, double d)
         {
             x *= a;
             y *= d;
+
+            return (x, y);
         }
 
         // 3D полное масштабирование
@@ -52,13 +56,15 @@ namespace GraphicRedactor
         }
 
         // 2D полное масштабирование
-        public static void Scaling(ref double x, ref double y, double s)
+        public static (double, double) Scaling(double x, double y, double s)
         {
             if (s != 0)
             {
                 x /= s;
                 y /= s;
             }
+
+            return (x, y);
         }
 
         // 3D вращение
@@ -99,6 +105,22 @@ namespace GraphicRedactor
             x = result.M11;
             y = result.M12;
             z = result.M13;
+        }
+
+        public static (double, double) Rotation(double x, double y, int angle)
+        {
+            Matrix operation = new Matrix();
+            double alpha = (double)angle / 180 * Math.PI;
+
+            operation.M11 = Math.Cos(alpha);
+            operation.M12 = Math.Sin(alpha);
+            operation.M21 = -Math.Sin(alpha);
+            operation.M22 = Math.Cos(alpha);
+
+            x = operation.M11 * x + operation.M12 * y;
+            y = operation.M21 * x + operation.M22 * y;
+
+            return (x, y);
         }
 
         // 3D зеркалирование

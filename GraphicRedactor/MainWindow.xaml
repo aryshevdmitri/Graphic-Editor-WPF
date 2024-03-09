@@ -62,7 +62,7 @@
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
                                     <Condition Property="Text" Value=""/>
-                                    <Condition Property="IsFocused" Value="False"/>
+                                    <Condition Property="IsKeyboardFocused" Value="False"/>
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="HintTextBlock" Property="Visibility" Value="Visible"/>
                             </MultiTrigger>
@@ -71,6 +71,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
 
         <Style TargetType="TextBox" x:Key="DefaultTextBox">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -132,6 +133,7 @@
                 <ComboBox Grid.Column="1" Name="OperationComboBox" Style="{StaticResource DefaultComboBox}" SelectionChanged="OperationComboBox_SelectionChanged">
                     <ComboBoxItem Content="Смещение" Name="TransferComboBoxItem"/>
                     <ComboBoxItem Content="Масштабирование" Name="ScalingComboBoxItem"/>
+                    <ComboBoxItem Content="Полное масштабирование" Name="FullScalingComboBoxItem"/>
                     <ComboBoxItem Content="Вращение" Name="RotationComboBoxItem"/>
                     <ComboBoxItem Content="Зеркалирование" Name="MirroringComboBoxItem"/>
                     <ComboBoxItem Content="Проецирование" Name="ProjectionComboBoxItem"/>
@@ -209,7 +211,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
+
             <!--First footer column-->
             <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -218,12 +220,12 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Name="CoordinatesTextBlockA" Style="{StaticResource CoordinatesHintTextBox}" Text="A"/>
-                <TextBox Grid.Column="1" Name="CoordinatesTextBlockB" Style="{StaticResource CoordinatesHintTextBox}" Text="B"/>
-                <TextBox Grid.Column="2" Name="CoordinatesTextBlockC" Style="{StaticResource CoordinatesHintTextBox}" Text="C"/>
+                <TextBox Grid.Column="0" Name="CoordinatesTextBlockA" Style="{StaticResource CoordinatesHintTextBox}" Tag="A"/>
+                <TextBox Grid.Column="1" Name="CoordinatesTextBlockB" Style="{StaticResource CoordinatesHintTextBox}" Tag="B"/>
+                <TextBox Grid.Column="2" Name="CoordinatesTextBlockC" Style="{StaticResource CoordinatesHintTextBox}" Tag="C"/>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
-                <TextBox Grid.Row="1" Name="CoordinatesTextBlockSum" Style="{StaticResource CoordinatesHintTextBox}" Text="Уравнение"/>
+                <TextBox Grid.Row="1" Name="CoordinatesTextBlockSum" Style="{StaticResource CoordinatesHintTextBox}" Tag="Уравнение"/>
             </Grid>
 
             <!--Second footer column-->
@@ -234,9 +236,9 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Name="CoordinatesTextBlockX1" Style="{StaticResource CoordinatesHintTextBox}" Text="X1"/>
-                <TextBox Grid.Column="1" Name="CoordinatesTextBlockY1" Style="{StaticResource CoordinatesHintTextBox}" Text="Y1"/>
-                <TextBox Grid.Column="2" Name="CoordinatesTextBlockZ1" Style="{StaticResource CoordinatesHintTextBox}" Text="Z1"/>
+                <TextBox Grid.Column="0" Name="CoordinatesTextBlockX1" Style="{StaticResource CoordinatesHintTextBox}" Tag="X1"/>
+                <TextBox Grid.Column="1" Name="CoordinatesTextBlockY1" Style="{StaticResource CoordinatesHintTextBox}" Tag="Y1"/>
+                <TextBox Grid.Column="2" Name="CoordinatesTextBlockZ1" Style="{StaticResource CoordinatesHintTextBox}" Tag="Z1"/>
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="1">
@@ -246,9 +248,9 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Name="CoordinatesTextBlockX2" Style="{StaticResource CoordinatesHintTextBox}" Text="X2"/>
-                <TextBox Grid.Column="1" Name="CoordinatesTextBlockY2" Style="{StaticResource CoordinatesHintTextBox}" Text="Y2"/>
-                <TextBox Grid.Column="2" Name="CoordinatesTextBlockZ2" Style="{StaticResource CoordinatesHintTextBox}" Text="Z2"/>
+                <TextBox Grid.Column="0" Name="CoordinatesTextBlockX2" Style="{StaticResource CoordinatesHintTextBox}" Tag="X2"/>
+                <TextBox Grid.Column="1" Name="CoordinatesTextBlockY2" Style="{StaticResource CoordinatesHintTextBox}" Tag="Y2"/>
+                <TextBox Grid.Column="2" Name="CoordinatesTextBlockZ2" Style="{StaticResource CoordinatesHintTextBox}" Tag="Z2"/>
             </Grid>
         </Grid>
     </Grid>

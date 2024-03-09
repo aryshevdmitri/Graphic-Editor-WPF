@@ -37,13 +37,14 @@ namespace GraphicRedactor
         private Ellipse selectedEllipse;
         private Ellipse startEllipse;
         private Ellipse endEllipse;
-            
-        private List<UIElement> groupElements = new List<UIElement>();
+
+        private List<Line> groupElements = new List<Line>();
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeEllipses();
+            InitializeCoordinates();
         }
 
         public void SaveCanvasData(CanvasData canvasData)
@@ -146,6 +147,15 @@ namespace GraphicRedactor
             }
         }
 
+        private void InitializeCoordinates()
+        {
+            double centerX = DrawingCanvas.Width / 2;
+            double centerY = DrawingCanvas.Height / 2;
+
+            // Устанавливаем центр холста как координаты (0, 0)
+            DrawingCanvas.RenderTransform = new TranslateTransform(-centerX, -centerY);
+        }
+
         private Line GetLineUnderMouse(Point mousePosition)
         {
             // Проверяем, попала ли мышь в какую-либо линию на холсте
@@ -221,7 +231,7 @@ namespace GraphicRedactor
                         case "Создание":
                             isCreating = true;
                             isEditing = false;
-                           
+
                             if (isGrouping)
                             {
                                 ClearGroup();
@@ -290,28 +300,82 @@ namespace GraphicRedactor
             {
                 ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
 
-                if (selectedItem != null)
+                if (selectedItem != null && groupElements.Count > 0)
                 {
                     string header = selectedItem.Content.ToString();
 
                     switch (header)
                     {
                         case "Смещение":
+                            Transfer transferWindow = new Transfer();
+                            transferWindow.ShowDialog();
+
+                            double transferM = transferWindow.M;
+                            double transferN = transferWindow.N;
+
+                            foreach (Line line in groupElements)
+                            {
+                                (line.X1, line.Y1) = AffineTransformations.Transfer(line.X1, line.Y1, transferM, transferN);
+                                (line.X2, line.Y2) = AffineTransformations.Transfer(line.X2, line.Y2, transferM, transferN);
+                            }
 
                             break;
                         case "Масштабирование":
+                            Scaling scalingWindow = new Scaling();
+                            scalingWindow.ShowDialog();
+
+                            double scalingA = scalingWindow.A;
+                            double scalingD = scalingWindow.D;
+
+                            foreach (Line line in groupElements)
+                            {
+                                (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, scalingA, scalingD);
+                                (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, scalingA, scalingD);
+                            }
 
                             break;
+
+                        case "Полное масштабирование":
+                            FullScaling fullScalingWindow = new FullScaling();
+                            fullScalingWindow.ShowDialog();
+
+                            double fullScalingS = fullScalingWindow.S;
+
+                            foreach (Line line in groupElements)
+                            {
+                                (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, fullScalingS);
+                                (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, fullScalingS);
+                            }
+
+                            break;
+
                         case "Вращение":
+                            Rotation rotationWindow = new Rotation();
+                            rotationWindow.ShowDialog();
+
+                            int rotationA = rotationWindow.A;
+
+                            foreach (Line line in groupElements)
+                            {
+                                (line.X1, line.Y1) = AffineTransformations.Rotation(line.X1, line.Y1, rotationA);
+                                (line.X2, line.Y2) = AffineTransformations.Rotation(line.X2, line.Y2, rotationA);
+                            }
 
                             break;
-                        case "Зеркалирование":
+                            //case "Вращение":
+                            //    AffineTransformations.Rotation
+                            //    break;
+                            //case "Зеркалирование":
+                            //    AffineTransformations.Mirroring
+                            //    break;
+                            //case "Проецирование":
+                            //    AffineTransformations.Projection
+                            //    break;
 
-                            break;
-                        case "Проецирование":
-
-                            break;
+                            
                     }
+
+                    OperationComboBox.SelectedItem = null;
                 }
             }
         }
@@ -326,11 +390,11 @@ namespace GraphicRedactor
         {
             if (sender is ComboBox comboBox)
             {
-                var selectedItem = comboBox.SelectedItem as ComboBoxItem;
+                ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
 
                 if (selectedItem != null)
                 {
-                    var stackPanel = selectedItem.Content as StackPanel;
+                    StackPanel stackPanel = selectedItem.Content as StackPanel;
                     if (stackPanel != null)
                     {
                         var textBlock = stackPanel.Children[1] as TextBlock;

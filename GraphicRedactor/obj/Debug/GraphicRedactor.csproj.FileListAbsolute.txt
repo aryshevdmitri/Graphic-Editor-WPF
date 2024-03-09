@@ -19,3 +19,12 @@ C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\Microsoft.
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\App.baml
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\GraphicR.5C1DC8FB.Up2Date
 C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\bin\Debug\ShowMeTheXAML.dll
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\FullScaling.g.cs
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Scaling.g.cs
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Transfer.g.cs
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\FullScaling.baml
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Scaling.baml
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Transfer.baml
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Rotation.g.cs
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\Operations\Rotation.baml
+C:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\obj\Debug\GeneratedInternalTypeHelper.g.cs
