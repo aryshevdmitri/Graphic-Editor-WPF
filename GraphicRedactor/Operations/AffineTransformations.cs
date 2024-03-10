@@ -105,18 +105,14 @@ namespace GraphicRedactor
 
         public static (double, double) Rotation(double x, double y, int angle)
         {
-            Matrix operation = new Matrix();
+            // Преобразование градусов в радианы
             double alpha = (double)angle / 180 * Math.PI;
 
-            operation.M11 = Math.Cos(alpha);
-            operation.M12 = Math.Sin(alpha);
-            operation.M21 = -Math.Sin(alpha);
-            operation.M22 = Math.Cos(alpha);
+            // Вычисление новых координат
+            double newX = x * Math.Cos(alpha) - y * Math.Sin(alpha);
+            double newY = x * Math.Sin(alpha) + y * Math.Cos(alpha);
 
-            x = operation.M11 * x + operation.M12 * y;
-            y = operation.M21 * x + operation.M22 * y;
-
-            return (x, y);
+            return (newX, newY);
         }
 
         // 3D зеркалирование
@@ -140,9 +136,9 @@ namespace GraphicRedactor
         public static (double, double) Mirroring(double x, double y, char axis)
         {
             if (axis == 'x')
-                x = -x;
-            else
                 y = -y;
+            else
+                x = -x;
 
             return (x, y);
         }

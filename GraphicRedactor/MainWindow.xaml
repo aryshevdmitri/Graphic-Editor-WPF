@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:GraphicRedactor"
         mc:Ignorable="d"
         Title="Графический редактор" Height="720" Width="1280">
-
     <Window.Resources>
         <Style TargetType="Button" x:Key="DefaultButton">
             <Setter Property="Background" Value="#21295C"/>
@@ -182,10 +181,17 @@
             </Grid>
         </Grid>
 
-        <!-- Content -->
-        <Grid Grid.Row="1">
-            <Border BorderBrush="Black" BorderThickness="1" ClipToBounds="True ">
-                <Canvas Name="DrawingCanvas" MouseLeftButtonDown="DrawingCanvas_MouseLeftButtonDown" MouseMove="DrawingCanvas_MouseMove" MouseLeftButtonUp="DrawingCanvas_MouseLeftButtonUp" MouseRightButtonDown="DrawingCanvas_MouseRightButtonDown" Background="White"/>
+        <!-- Working space -->
+        <Grid Grid.Row="1" Name="WorkSpaceGrid">
+            <Border BorderBrush="Black" BorderThickness="1" ClipToBounds="True">
+                <Canvas Name="DrawingCanvas" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="DrawingCanvas_MouseLeftButtonDown" MouseMove="DrawingCanvas_MouseMove" MouseLeftButtonUp="DrawingCanvas_MouseLeftButtonUp" MouseRightButtonDown="DrawingCanvas_MouseRightButtonDown" Background="White">
+                    <Rectangle Name="DrawingRectangle" Height="{Binding ActualHeight, ElementName=WorkSpaceGrid}" Width="{Binding ActualWidth, ElementName=WorkSpaceGrid}" Fill="Transparent" Canvas.Left="-640" Canvas.Top="-299" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="-1" ScaleX="1" />
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                </Canvas>
             </Border>
         </Grid>
 

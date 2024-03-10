@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\graphicredactor\\operations\\affinetransformations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\operations\\affinetransformations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\graphicredactor\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\graphicredactor\\operations\\affinetransformations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\operations\\affinetransformations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\operations\\mirroring.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\operations\\mirroring.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\operations\\scaling.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\operations\\scaling.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\operations\\mirroring.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\operations\\mirroring.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,11 +30,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\MainWindow.xaml",
               "RelativeDocumentMoniker": "GraphicRedactor\\MainWindow.xaml",
@@ -49,7 +53,7 @@
               "RelativeDocumentMoniker": "GraphicRedactor\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\MainWindow.xaml.cs",
               "RelativeToolTip": "GraphicRedactor\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAM4AAAAAAAAAAAAlwG8BAAAdAAAA",
+              "ViewState": "AQIAAEgBAAAAAAAAAAAmwGIBAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-28T14:28:07.369Z",
               "IsPinned": true,
@@ -57,13 +61,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "AffineTransformations.cs",
               "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\AffineTransformations.cs",
               "RelativeDocumentMoniker": "GraphicRedactor\\Operations\\AffineTransformations.cs",
               "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\AffineTransformations.cs",
               "RelativeToolTip": "GraphicRedactor\\Operations\\AffineTransformations.cs",
-              "ViewState": "AQIAAIYAAAAAAAAAAAAlwJkAAAAjAAAA",
+              "ViewState": "AQIAAF4AAAAAAAAAAAAEwGsAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-05T15:16:53.362Z",
               "IsPinned": true,
@@ -72,14 +76,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Scaling.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\Scaling.xaml.cs",
-              "RelativeDocumentMoniker": "GraphicRedactor\\Operations\\Scaling.xaml.cs",
-              "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\Scaling.xaml.cs",
-              "RelativeToolTip": "GraphicRedactor\\Operations\\Scaling.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
+              "Title": "Mirroring.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\Mirroring.xaml.cs",
+              "RelativeDocumentMoniker": "GraphicRedactor\\Operations\\Mirroring.xaml.cs",
+              "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\Mirroring.xaml.cs",
+              "RelativeToolTip": "GraphicRedactor\\Operations\\Mirroring.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-09T16:41:15.845Z",
+              "WhenOpened": "2024-03-10T16:32:33.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Mirroring.xaml",
+              "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\Mirroring.xaml",
+              "RelativeDocumentMoniker": "GraphicRedactor\\Operations\\Mirroring.xaml",
+              "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\Mirroring.xaml",
+              "RelativeToolTip": "GraphicRedactor\\Operations\\Mirroring.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-03-10T16:37:17.264Z",
               "EditorCaption": ""
             },
             {

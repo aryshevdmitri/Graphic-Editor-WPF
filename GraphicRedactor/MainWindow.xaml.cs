@@ -46,13 +46,17 @@ namespace GraphicRedactor
             InitializeEllipses();
         }
 
+        /// <summary>
+        /// Save data from DrawingCanvas in .xml
+        /// </summary>
+        /// <param name="canvasData"></param>
         public void SaveCanvasData(CanvasData canvasData)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog(); // Создаем диалоговое окно сохранения файла
-            saveFileDialog.Filter = "XML Files (*.xml)|*.xml"; // Устанавливаем фильтр для сохранения только в формате XML
-            if (saveFileDialog.ShowDialog() == true) // Показываем диалоговое окно и проверяем, был ли выбран файл для сохранения
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XML Files (*.xml)|*.xml"; 
+            if (saveFileDialog.ShowDialog() == true) 
             {
-                string filePath = saveFileDialog.FileName; // Получаем путь для сохранения файла
+                string filePath = saveFileDialog.FileName; 
 
                 // Собираем данные о линиях
                 canvasData.Lines = new List<LineData>();
@@ -70,7 +74,6 @@ namespace GraphicRedactor
                     }
                 }
 
-                // Сохраняем данные в файл
                 XmlSerializer serializer = new XmlSerializer(typeof(CanvasData));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -79,22 +82,25 @@ namespace GraphicRedactor
             }
         }
 
+        /// <summary>
+        /// Load data for DrawingCanvas from .xml file
+        /// </summary>
+        /// <returns></returns>
         public CanvasData LoadCanvasData()
         {
             CanvasData canvasData = null; // Инициализация переменной canvasData
 
-            OpenFileDialog openFileDialog = new OpenFileDialog(); // Создание диалогового окна открытия файла
-            openFileDialog.Filter = "XML Files (*.xml)|*.xml"; // Фильтр для отображения только XML файлов
-            if (openFileDialog.ShowDialog() == true) // Показываем диалоговое окно и проверяем, был ли выбран файл
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML Files (*.xml)|*.xml"; 
+            if (openFileDialog.ShowDialog() == true) 
             {
-                string filePath = openFileDialog.FileName; // Получаем путь к выбранному файлу
+                string filePath = openFileDialog.FileName; 
 
                 XmlSerializer serializer = new XmlSerializer(typeof(CanvasData));
                 using (FileStream stream = new FileStream(filePath, FileMode.Open))
                 {
-                    canvasData = (CanvasData)serializer.Deserialize(stream); // Присваивание значению переменной canvasData
+                    canvasData = (CanvasData)serializer.Deserialize(stream); 
 
-                    // Создаем элементы холста на основе данных
                     foreach (var lineData in canvasData.Lines)
                     {
                         Line line = new Line
@@ -112,9 +118,12 @@ namespace GraphicRedactor
                 }
             }
 
-            return canvasData; // Возвращаем переменную canvasData
+            return canvasData; 
         }
 
+        /// <summary>
+        /// Initilization of two hidden ellipses on DrawingCanvas
+        /// </summary>
         private void InitializeEllipses()
         {
             startEllipse = new Ellipse
@@ -489,7 +498,13 @@ namespace GraphicRedactor
 
         private void DeleteAllMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            DrawingCanvas.Children.Clear();
+            var childrenCopy = DrawingCanvas.Children.OfType<UIElement>().ToList();
+
+            foreach (UIElement children in childrenCopy)
+            {
+                if (children != DrawingRectangle)
+                    DrawingCanvas.Children.Remove(children);
+            }
 
             CoordinatesTextBlockA.Text = "A";
             CoordinatesTextBlockB.Text = "B";
@@ -504,30 +519,28 @@ namespace GraphicRedactor
             CoordinatesTextBlockZ2.Text = "Z2";
         }
 
-        private void ShowTwoDimension_Click(object sender, RoutedEventArgs e)
+    private void ShowTwoDimension_Click(object sender, RoutedEventArgs e)
         {
             xAxis = new Line
             {
-                X1 = 0,
-                Y1 = DrawingCanvas.ActualHeight / 2,
-                X2 = DrawingCanvas.ActualWidth,
-                Y2 = DrawingCanvas.ActualHeight / 2,
+                X1 = -WorkSpaceGrid.ActualWidth / 2,
+                Y1 = 0,
+                X2 = WorkSpaceGrid.ActualWidth / 2,
+                Y2 = 0,
                 Stroke = Brushes.Black,
                 StrokeThickness = 1
             };
 
-            // Создаем линию для оси Y
             yAxis = new Line
             {
-                X1 = DrawingCanvas.ActualWidth / 2,
-                Y1 = 0,
-                X2 = DrawingCanvas.ActualWidth / 2,
-                Y2 = DrawingCanvas.ActualHeight,
+                X1 = 0,
+                Y1 = WorkSpaceGrid.ActualHeight / 2,
+                X2 = 0,
+                Y2 = -WorkSpaceGrid.ActualHeight / 2,
                 Stroke = Brushes.Black,
                 StrokeThickness = 1
             };
 
-            // Добавляем линии на холст
             DrawingCanvas.Children.Add(xAxis);
             DrawingCanvas.Children.Add(yAxis);
         }
