@@ -137,7 +137,7 @@ namespace GraphicRedactor
         {
             if (axis == 'x')
                 y = -y;
-            else
+            else if (axis == 'y')
                 x = -x;
 
             return (x, y);

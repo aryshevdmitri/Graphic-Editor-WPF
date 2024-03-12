@@ -130,28 +130,28 @@
                     <ComboBoxItem IsSelected="True">
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Fill="Black" Width="16" Height="16" Margin="0,2,5,2"/>
-                            <TextBlock Text="Black"/>
+                            <TextBlock Text="Черный"/>
                         </StackPanel>
                     </ComboBoxItem>
 
                     <ComboBoxItem>
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Fill="Red" Width="16" Height="16" Margin="0,2,5,2"/>
-                            <TextBlock Text="Red"/>
+                            <TextBlock Text="Красный"/>
                         </StackPanel>
                     </ComboBoxItem>
 
                     <ComboBoxItem>
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Fill="Green" Width="16" Height="16" Margin="0,2,5,2"/>
-                            <TextBlock Text="Green"/>
+                            <TextBlock Text="Зеленый"/>
                         </StackPanel>
                     </ComboBoxItem>
 
                     <ComboBoxItem>
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Fill="Blue" Width="16" Height="16" Margin="0,2,5,2"/>
-                            <TextBlock Text="Blue"/>
+                            <TextBlock Text="Синий"/>
                         </StackPanel>
                     </ComboBoxItem>
                 </ComboBox>

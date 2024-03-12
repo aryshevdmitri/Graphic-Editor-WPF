@@ -289,9 +289,14 @@ namespace GraphicRedactor
 
         private void OperationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
+            if (groupElements.Count == 0 && OperationComboBox.SelectedItem != null)
             {
-                if (comboBox.SelectedItem is ComboBoxItem selectedItem && groupElements.Count > 0)
+                MessageBox.Show("Добавьте элементы в группу", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                OperationComboBox.SelectedItem = null;
+            }
+            else if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
+            {
+                if (comboBox.SelectedItem is ComboBoxItem selectedItem)
                 {
                     string header = selectedItem.Content.ToString();
 
@@ -304,12 +309,15 @@ namespace GraphicRedactor
                             double transferM = transferWindow.M;
                             double transferN = transferWindow.N;
 
-                            foreach (Line line in groupElements)
+                            if (transferM != 0 && transferN != 0)
                             {
-                                (line.X1, line.Y1) = AffineTransformations.Transfer(line.X1, line.Y1, transferM, transferN);
-                                (line.X2, line.Y2) = AffineTransformations.Transfer(line.X2, line.Y2, transferM, transferN);
+                                foreach (Line line in groupElements)
+                                {
+                                    (line.X1, line.Y1) = AffineTransformations.Transfer(line.X1, line.Y1, transferM, transferN);
+                                    (line.X2, line.Y2) = AffineTransformations.Transfer(line.X2, line.Y2, transferM, transferN);
+                                }
                             }
-
+                            
                             break;
                         case "Масштабирование":
                             Scaling scalingWindow = new Scaling();
@@ -318,12 +326,15 @@ namespace GraphicRedactor
                             double scalingA = scalingWindow.A;
                             double scalingD = scalingWindow.D;
 
-                            foreach (Line line in groupElements)
+                            if (scalingA != 0 && scalingD != 0)
                             {
-                                (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, scalingA, scalingD);
-                                (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, scalingA, scalingD);
+                                foreach (Line line in groupElements)
+                                {
+                                    (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, scalingA, scalingD);
+                                    (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, scalingA, scalingD);
+                                }
                             }
-
+                                
                             break;
 
                         case "Полное масштабирование":
@@ -332,12 +343,15 @@ namespace GraphicRedactor
 
                             double fullScalingS = fullScalingWindow.S;
 
-                            foreach (Line line in groupElements)
+                            if (fullScalingS != 0)
                             {
-                                (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, fullScalingS);
-                                (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, fullScalingS);
+                                foreach (Line line in groupElements)
+                                {
+                                    (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, fullScalingS);
+                                    (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, fullScalingS);
+                                }
                             }
-
+                            
                             break;
 
                         case "Вращение":
@@ -346,10 +360,13 @@ namespace GraphicRedactor
 
                             int rotationA = rotationWindow.A;
 
-                            foreach (Line line in groupElements)
+                            if (rotationA != 0)
                             {
-                                (line.X1, line.Y1) = AffineTransformations.Rotation(line.X1, line.Y1, rotationA);
-                                (line.X2, line.Y2) = AffineTransformations.Rotation(line.X2, line.Y2, rotationA);
+                                foreach (Line line in groupElements)
+                                {
+                                    (line.X1, line.Y1) = AffineTransformations.Rotation(line.X1, line.Y1, rotationA);
+                                    (line.X2, line.Y2) = AffineTransformations.Rotation(line.X2, line.Y2, rotationA);
+                                }
                             }
 
                             break;
@@ -359,10 +376,13 @@ namespace GraphicRedactor
 
                             char mirroringAxis = mirroringWindow.Axis;
 
-                            foreach (Line line in groupElements)
+                            if (mirroringAxis != ' ')
                             {
-                                (line.X1, line.Y1) = AffineTransformations.Mirroring(line.X1, line.Y1, mirroringAxis);
-                                (line.X2, line.Y2) = AffineTransformations.Mirroring(line.X2, line.Y2, mirroringAxis);
+                                foreach (Line line in groupElements)
+                                {
+                                    (line.X1, line.Y1) = AffineTransformations.Mirroring(line.X1, line.Y1, mirroringAxis);
+                                    (line.X2, line.Y2) = AffineTransformations.Mirroring(line.X2, line.Y2, mirroringAxis);
+                                }
                             }
 
                             break;
@@ -373,10 +393,13 @@ namespace GraphicRedactor
                             double projectionP = projectionWindow.P;
                             double projectionQ = projectionWindow.Q;
 
-                            foreach (Line line in groupElements)
+                            if (projectionP != 0 && projectionQ != 0)
                             {
-                                (line.X1, line.Y1) = AffineTransformations.Projection(line.X1, line.Y1, projectionP, projectionQ);
-                                (line.X2, line.Y2) = AffineTransformations.Projection(line.X2, line.Y2, projectionP, projectionQ);
+                                foreach (Line line in groupElements)
+                                {
+                                    (line.X1, line.Y1) = AffineTransformations.Projection(line.X1, line.Y1, projectionP, projectionQ);
+                                    (line.X2, line.Y2) = AffineTransformations.Projection(line.X2, line.Y2, projectionP, projectionQ);
+                                }
                             }
 
                             break;
@@ -448,11 +471,11 @@ namespace GraphicRedactor
             // Перебираем копию коллекции
             foreach (var item in childrenCopy)
             {
-                if (item is Line line)
+                if (item is Line line && item != xAxis && item != yAxis)
                 {
                     line.Stroke = focusLineColor;
-
-                    groupElements.Add(line);
+                    if (item != xAxis && item != yAxis)
+                        groupElements.Add(line);
                 }
             }
         }
@@ -466,7 +489,7 @@ namespace GraphicRedactor
             // Перебираем копию коллекции
             foreach (var item in childrenCopy)
             {
-                if (item is Line line)
+                if (item is Line line && item != xAxis && item != yAxis)
                 {
                     line.Stroke = lineColor;
 
@@ -502,7 +525,7 @@ namespace GraphicRedactor
 
             foreach (UIElement children in childrenCopy)
             {
-                if (children != DrawingRectangle)
+                if (children != DrawingRectangle && children != xAxis && children != yAxis)
                     DrawingCanvas.Children.Remove(children);
             }
 
@@ -519,7 +542,7 @@ namespace GraphicRedactor
             CoordinatesTextBlockZ2.Text = "Z2";
         }
 
-    private void ShowTwoDimension_Click(object sender, RoutedEventArgs e)
+        private void ShowTwoDimension_Click(object sender, RoutedEventArgs e)
         {
             xAxis = new Line
             {
@@ -625,7 +648,7 @@ namespace GraphicRedactor
                 Point mousePosition = e.GetPosition(DrawingCanvas);
                 selectedLine = GetLineUnderMouse(mousePosition);
 
-                if (selectedLine != null && !groupElements.Contains(selectedLine))
+                if (selectedLine != null && !groupElements.Contains(selectedLine) && selectedLine != xAxis && selectedLine != yAxis)
                 {
                     // Перемещение группы линий начинается при нажатии на выбранную линию из группы
                     selectedLine.Stroke = focusLineColor;
