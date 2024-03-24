@@ -15,7 +15,7 @@ namespace GraphicRedactor
     public partial class MainWindow : Window
     {
         private SolidColorBrush lineColor = Brushes.Black;
-        private SolidColorBrush focusLineColor = Brushes.Red;
+        private readonly SolidColorBrush focusLineColor = Brushes.Red;
         private double lineThickness = 2;
 
         private Line xAxis;
@@ -55,13 +55,15 @@ namespace GraphicRedactor
         /// <param name="canvasData"></param>
         public void SaveCanvasData(CanvasData canvasData)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "XML Files (*.xml)|*.xml";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "XML Files (*.xml)|*.xml"
+            };
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 string filePath = saveFileDialog.FileName;
 
-                // Собираем данные о линиях
                 canvasData.Lines = new List<LineData>();
                 foreach (var child in DrawingCanvas.Children)
                 {
@@ -72,16 +74,15 @@ namespace GraphicRedactor
                             X1 = line.X1,
                             Y1 = line.Y1,
                             X2 = line.X2,
-                            Y2 = line.Y2
+                            Y2 = line.Y2,
+                            Tag = (string)line.Tag
                         });
                     }
                 }
 
                 XmlSerializer serializer = new XmlSerializer(typeof(CanvasData));
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                {
                     serializer.Serialize(stream, canvasData);
-                }
             }
         }
 
@@ -93,8 +94,10 @@ namespace GraphicRedactor
         {
             CanvasData canvasData = null; // Инициализация переменной canvasData
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML Files (*.xml)|*.xml";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "XML Files (*.xml)|*.xml"
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 string filePath = openFileDialog.FileName;
@@ -171,36 +174,29 @@ namespace GraphicRedactor
             return null;
         }
 
-        private Line CreateLine(double x1, double y1, double z1, double x2, double y2, double z2, char tag)
+        private Line CreateLine(double x1, double y1, double z1, double x2, double y2, double z2)
         {
-            Line line = null;
-             
-            if (tag == 'y')
+            Line line = new Line
             {
-                line = new Line
-                {
-                    X1 = x1,
-                    Y1 = y1,
-                    X2 = x2,
-                    Y2 = y2,
-                    Tag = y1.ToString() + tag + y2.ToString(),
-                    Stroke = lineColor,
-                    StrokeThickness = lineThickness,
-                };
-            }
-            else if (tag == 'z')
+                X1 = x1,
+                Y1 = y1,
+                X2 = x2,
+                Y2 = y2,
+                Stroke = lineColor,
+                StrokeThickness = lineThickness,
+            };
+
+            LineCoordinates coordinates = new LineCoordinates
             {
-                line = new Line
-                {
-                    X1 = x1,
-                    Y1 = y1,
-                    X2 = x2,
-                    Y2 = y2,
-                    Tag = z1.ToString() + tag + z2.ToString(),
-                    Stroke = lineColor,
-                    StrokeThickness = lineThickness,
-                };
-            }
+                X1 = x1,
+                Y1 = y1,
+                Z1 = z1,
+                X2 = x2,
+                Y2 = y2,
+                Z2 = z2
+            };
+
+            line.Tag = coordinates;
 
             return line;
         }
@@ -211,47 +207,28 @@ namespace GraphicRedactor
             {
                 if (child is Line line && line.Tag != null)
                 {
+                    LineCoordinates lineCoordinates = line.Tag as LineCoordinates;
+
+                    double x1 = lineCoordinates.X1;
+                    double y1 = lineCoordinates.Y1;
+                    double z1 = lineCoordinates.Z1;
+                    double x2 = lineCoordinates.X2;
+                    double y2 = lineCoordinates.Y2;
+                    double z2 = lineCoordinates.Z2;
+
                     if (isXY)
                     {
-                        if (line.Tag.ToString().Contains('y'))
-                        {
-                            string[] yValues = line.Tag.ToString().Split('y');
-                            double y1 = double.Parse(yValues[0]);
-                            double y2 = double.Parse(yValues[1]);
-
-                            line.X1 = line.X1;
-                            line.Y1 = y1;
-                            line.X2 = line.X2;
-                            line.Y2 = y2;
-                        }
-                        else if (line.Tag.ToString().Contains('z'))
-                        {
-                            line.X1 = line.X1;
-                            line.Y1 = 0;
-                            line.X2 = line.X2;
-                            line.Y2 = 0;
-                        }
+                        line.X1 = x1;
+                        line.Y1 = y1;
+                        line.X2 = x2;
+                        line.Y2 = y2;
                     }
                     else if (isXZ)
                     {
-                        if (line.Tag.ToString().Contains('z'))
-                        {
-                            string[] zValues = line.Tag.ToString().Split('z');
-                            double z1 = double.Parse(zValues[0]);
-                            double z2 = double.Parse(zValues[1]);
-
-                            line.X1 = line.X1;
-                            line.Y1 = z1;
-                            line.X2 = line.X2;
-                            line.Y2 = z2;
-                        }
-                        else if (line.Tag.ToString().Contains('y'))
-                        {
-                            line.X1 = line.X1;
-                            line.Y1 = 0;
-                            line.X2 = line.X2;
-                            line.Y2 = 0;
-                        }
+                        line.X1 = x1;
+                        line.Y1 = z1;
+                        line.X2 = x2;
+                        line.Y2 = z2;
                     }
                 }
             }
@@ -663,18 +640,31 @@ namespace GraphicRedactor
             DrawingCanvas.Children.Remove(yAxis);
         }
 
-        private void CoordinatesXY_Click(object sender, RoutedEventArgs e)
+        private void CoordinatesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (isXZ == true) isXZ = false;
-            isXY = true;
-            RedrawLines();
-        }
+            if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
+            {
+                if (comboBox.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content != null)
+                {
+                    string header = selectedItem.Content.ToString();
 
-        private void CoordinatesXZ_Click(object sender, RoutedEventArgs e)
-        {
-            if (isXY == true) isXY = false;
-            isXZ = true;
-            RedrawLines();
+                    switch (header)
+                    {
+                        case "XY":
+                            isXZ = false;
+                            isXY = true;
+                            RedrawLines();
+                            break;
+                        case "XZ":
+                            isXY = false;
+                            isXZ = true;
+                            RedrawLines();
+                            break;
+                        case "Трехмерная проекция":
+                            break;
+                    }
+                }
+            }
         }
 
         private void DrawingCanvas_MouseLeftButtonDown(object sender, MouseEventArgs e)
@@ -686,12 +676,22 @@ namespace GraphicRedactor
 
                 if (isXY)
                 {
-                    currentLine = CreateLine(startPoint.X, startPoint.Y, 0, startPoint.X, startPoint.Y, 0, 'y');
+                    currentLine = CreateLine(startPoint.X, startPoint.Y, 0, startPoint.X, startPoint.Y, 0);
                     DrawingCanvas.Children.Add(currentLine);
                 }
                 else if (isXZ)
                 {
-                    currentLine = CreateLine(startPoint.X, startPoint.Y, startPoint.Y, startPoint.X, startPoint.Y, startPoint.Y, 'z');
+                    currentLine = CreateLine(startPoint.X, startPoint.Y, startPoint.Y, startPoint.X, startPoint.Y, startPoint.Y);
+                    LineCoordinates correctTag = new LineCoordinates
+                    {
+                        X1 = startPoint.X,
+                        Y1 = 0,
+                        Z1 = startPoint.Y,
+                        X2 = startPoint.X,
+                        Y2 = 0,
+                        Z2 = startPoint.Y
+                    };
+                    LineCoordinates.UpdateTag(currentLine, correctTag);
                     DrawingCanvas.Children.Add(currentLine);
                 }
             }
@@ -765,13 +765,13 @@ namespace GraphicRedactor
                     {
                         currentLine.X2 = currentPoint.X;
                         currentLine.Y2 = currentPoint.Y;
-                        UpdateLineZ2(currentLine, currentPoint.Y);
+                        LineCoordinates.UpdateTagY2(currentLine, currentPoint.X, currentPoint.Y);
                     }
                     else if (isXZ)
                     {
                         currentLine.X2 = currentPoint.X;
                         currentLine.Y2 = currentPoint.Y;
-                        UpdateLineZ2(currentLine, currentPoint.Y);
+                        LineCoordinates.UpdateTagZ2(currentLine, currentPoint.X, currentPoint.Y);
                     }
                 }
             }
@@ -784,30 +784,27 @@ namespace GraphicRedactor
                     double deltaX = mousePosition.X - startPoint.X;
                     double deltaY = mousePosition.Y - startPoint.Y;
 
-                    if (isXY && selectedLine.Tag.ToString().Contains('y'))
+                    if (isXY)
                     {
                         selectedLine.X1 += deltaX;
                         selectedLine.Y1 += deltaY;
                         selectedLine.X2 += deltaX;
                         selectedLine.Y2 += deltaY;
 
-                        UpdateLineZ1(selectedLine, selectedLine.Y1);
-                        UpdateLineZ2(selectedLine, selectedLine.Y2);
-                    } 
-                    else if (isXZ && selectedLine.Tag.ToString().Contains('z'))
+                        LineCoordinates.UpdateTagY(selectedLine, selectedLine.X1, selectedLine.Y1, selectedLine.X2, selectedLine.Y2);
+                    }
+                    else if (isXZ)
                     {
                         selectedLine.X1 += deltaX;
                         selectedLine.Y1 += deltaY;
                         selectedLine.X2 += deltaX;
                         selectedLine.Y2 += deltaY;
 
-                        UpdateLineZ1(selectedLine, selectedLine.Y1);
-                        UpdateLineZ2(selectedLine, selectedLine.Y2);
+                        LineCoordinates.UpdateTagZ(selectedLine, selectedLine.X1, selectedLine.Y1, selectedLine.X2, selectedLine.Y2);
                     }
 
                     startPoint = mousePosition;
 
-                    // Обновляем положение кругов вместе с линией
                     if (startEllipse != null && endEllipse != null)
                     {
                         Canvas.SetLeft(startEllipse, selectedLine.X1 - 5);
@@ -848,47 +845,41 @@ namespace GraphicRedactor
                 currentLine = null;
             }
 
-            isDragging = false;
-            isDraggingEllipse = false;
+            if (isDragging)
+            {
+                isDragging = false;
+                isDraggingEllipse = false;
+            }
 
             if (isGrouping | isEditing && selectedLine != null)
             {
-                if (selectedLine.Tag.ToString().Contains('y'))
-                {
-                    CoordinatesTextBlockA.Text = $"{selectedLine.Y2 - selectedLine.Y1}";
-                    CoordinatesTextBlockB.Text = $"{selectedLine.X1 - selectedLine.X2}";
-                    CoordinatesTextBlockC.Text = $"{selectedLine.X2 * selectedLine.Y1 - selectedLine.X1 * selectedLine.Y2}";
-                    CoordinatesTextBlockSum.Text = $"{selectedLine.Y2 - selectedLine.Y1}x + {selectedLine.X1 - selectedLine.X2}y + {selectedLine.X2 * selectedLine.Y1 - selectedLine.X1 * selectedLine.Y2} = 0";
+                LineCoordinates lineCoordinates = selectedLine.Tag as LineCoordinates;
+                double x1 = lineCoordinates.X1;
+                double y1 = lineCoordinates.Y1;
+                double z1 = lineCoordinates.Z1;
+                double x2 = lineCoordinates.X2;
+                double y2 = lineCoordinates.Y2;
+                double z2 = lineCoordinates.Z2;
 
-                    CoordinatesTextBlockX1.Text = $"{selectedLine.X1}";
-                    CoordinatesTextBlockX2.Text = $"{selectedLine.X2}";
-                    CoordinatesTextBlockY1.Text = $"{selectedLine.Y1}";
-                    CoordinatesTextBlockY2.Text = $"{selectedLine.Y2}";
-                    CoordinatesTextBlockZ1.Text = $"{0}";
-                    CoordinatesTextBlockZ2.Text = $"{0}";
-                }
-                
-                if (selectedLine.Tag.ToString().Contains('z'))
-                {
-                    string[] zValues = selectedLine.Tag.ToString().Split('z');
-                    double z1 = double.Parse(zValues[0]);
-                    double z2 = double.Parse(zValues[1]);
+                CoordinatesTextBlockA.Text = $"{y2 - y1}";
+                CoordinatesTextBlockB.Text = $"{x1 - x2}";
+                CoordinatesTextBlockC.Text = $"{x2 * y1 - x1 * y2}";
+                CoordinatesTextBlockSum.Text = $"{y2 - y1}x + {x1 - x2}y + {x2 * y1 - x1 * y2} = 0";
 
-                    CoordinatesTextBlockA.Text = $"{z2 - z1}";
-                    CoordinatesTextBlockB.Text = $"{selectedLine.X1 - selectedLine.X2}";
-                    CoordinatesTextBlockC.Text = $"{selectedLine.X2 * z1 - selectedLine.X1 * z2}";
-                    CoordinatesTextBlockSum.Text = $"{z2 - z1}x + {selectedLine.X1 - selectedLine.X2}y + {selectedLine.X2 * z1 - selectedLine.X1 * z2} = 0";
-
-                    CoordinatesTextBlockX1.Text = $"{selectedLine.X1}";
-                    CoordinatesTextBlockX2.Text = $"{selectedLine.X2}";
-                    CoordinatesTextBlockY1.Text = $"{0}";
-                    CoordinatesTextBlockY2.Text = $"{0}";
-                    CoordinatesTextBlockZ1.Text = $"{z1}";
-                    CoordinatesTextBlockZ2.Text = $"{z2}";
-                }
+                CoordinatesTextBlockX1.Text = $"{x1}";
+                CoordinatesTextBlockX2.Text = $"{x2}";
+                CoordinatesTextBlockY1.Text = $"{y1}";
+                CoordinatesTextBlockY2.Text = $"{y2}";
+                CoordinatesTextBlockZ1.Text = $"{z1}";
+                CoordinatesTextBlockZ2.Text = $"{z2}";
             }
         }
 
+        /// <summary>
+        /// Delete line by mouse right button pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DrawingCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point mousePosition = e.GetPosition(DrawingCanvas);
@@ -912,7 +903,6 @@ namespace GraphicRedactor
             if (e.Source is Ellipse)
             {
                 isDraggingEllipse = true;
-                // Получаем начальные координаты для эллипса
                 startPointEllipse = e.GetPosition(DrawingCanvas);
                 selectedEllipse = (Ellipse)sender;
             }
@@ -924,22 +914,22 @@ namespace GraphicRedactor
             {
                 Point mousePosition = e.GetPosition(DrawingCanvas);
 
-                // Вычисляем разницу между текущими координатами мыши и начальными координатами эллипса
                 double deltaX = mousePosition.X - startPointEllipse.X;
                 double deltaY = mousePosition.Y - startPointEllipse.Y;
 
-                // Обновляем вторую координату линии на основе разницы
                 selectedLine.X1 += deltaX;
                 selectedLine.Y1 += deltaY;
 
-                // Обновляем положение эллипса
+                if (isXY)
+                    LineCoordinates.UpdateTagY1(selectedLine, selectedLine.X1, selectedLine.Y1);
+                else if (isXZ)
+                    LineCoordinates.UpdateTagZ1(selectedLine, selectedLine.X1, selectedLine.Y1);
+
                 Canvas.SetLeft(startEllipse, mousePosition.X - 5);
                 Canvas.SetTop(startEllipse, mousePosition.Y - 5);
 
-                // Обновляем начальные координаты эллипса для следующего перемещения
                 startPointEllipse = mousePosition;
 
-                // Обновляем конец линии, чтобы сделать маркеры привязанными к новым координатам
                 Canvas.SetLeft(endEllipse, selectedLine.X2 - 5);
                 Canvas.SetTop(endEllipse, selectedLine.Y2 - 5);
             }
@@ -950,7 +940,6 @@ namespace GraphicRedactor
             if (e.Source is Ellipse)
             {
                 isDraggingEllipse = true;
-                // Получаем начальные координаты для эллипса
                 startPointEllipse = e.GetPosition(DrawingCanvas);
                 selectedEllipse = (Ellipse)sender;
             }
@@ -962,64 +951,24 @@ namespace GraphicRedactor
             {
                 Point mousePosition = e.GetPosition(DrawingCanvas);
 
-                // Вычисляем разницу между текущими координатами мыши и начальными координатами эллипса
                 double deltaX = mousePosition.X - startPointEllipse.X;
                 double deltaY = mousePosition.Y - startPointEllipse.Y;
 
-                // Обновляем вторую координату линии на основе разницы
                 selectedLine.X2 += deltaX;
                 selectedLine.Y2 += deltaY;
 
-                // Обновляем положение эллипса
+                if (isXY)
+                    LineCoordinates.UpdateTagY2(selectedLine, selectedLine.X1, selectedLine.Y1);
+                else if (isXZ)
+                    LineCoordinates.UpdateTagZ2(selectedLine, selectedLine.X1, selectedLine.Y1);
+
                 Canvas.SetLeft(endEllipse, mousePosition.X - 5);
                 Canvas.SetTop(endEllipse, mousePosition.Y - 5);
 
-                // Обновляем начальные координаты эллипса для следующего перемещения
                 startPointEllipse = mousePosition;
 
-                // Обновляем начало линии, чтобы сделать маркеры привязанными к новым координатам
                 Canvas.SetLeft(startEllipse, selectedLine.X1 - 5);
                 Canvas.SetTop(startEllipse, selectedLine.Y1 - 5);
-            }
-        }
-
-        private void UpdateLineZ1(Line line, double newZ1)
-        {
-            if (line.Tag.ToString().Contains('y'))
-            {
-                string[] tagParts = line.Tag.ToString().Split('y');
-                double oldZ1 = double.Parse(tagParts[0]);
-                double oldZ2 = double.Parse(tagParts[1]);
-
-                line.Tag = $"{newZ1}y{oldZ2}";
-            }
-            else if (line.Tag.ToString().Contains('z'))
-            {
-                string[] tagParts = line.Tag.ToString().Split('z');
-                double oldZ1 = double.Parse(tagParts[0]);
-                double oldZ2 = double.Parse(tagParts[1]);
-
-                line.Tag = $"{newZ1}z{oldZ2}";
-            }
-        }
-
-        private void UpdateLineZ2(Line line, double newZ2)
-        {
-            if (line.Tag.ToString().Contains('y'))
-            {
-                string[] tagParts = line.Tag.ToString().Split('y');
-                double oldZ2 = double.Parse(tagParts[1]);
-                double oldZ1 = double.Parse(tagParts[0]);
-
-                line.Tag = $"{oldZ1}y{newZ2}";
-            }
-            else if (line.Tag.ToString().Contains('z'))
-            {
-                string[] tagParts = line.Tag.ToString().Split('z');
-                double oldZ2 = double.Parse(tagParts[1]);
-                double oldZ1 = double.Parse(tagParts[0]);
-
-                line.Tag = $"{oldZ1}z{newZ2}";
             }
         }
     }

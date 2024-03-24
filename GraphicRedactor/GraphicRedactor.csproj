@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LineCoordinates.cs" />
     <Compile Include="Operations\Mirroring.xaml.cs">
       <DependentUpon>Mirroring.xaml</DependentUpon>
     </Compile>

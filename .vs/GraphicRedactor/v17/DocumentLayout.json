@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\savedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\savedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\graphicredactor\\linecoordinates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\linecoordinates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
@@ -22,7 +30,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\MainWindow.xaml",
               "RelativeDocumentMoniker": "GraphicRedactor\\MainWindow.xaml",
@@ -41,15 +49,41 @@
               "RelativeDocumentMoniker": "GraphicRedactor\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\MainWindow.xaml.cs",
               "RelativeToolTip": "GraphicRedactor\\MainWindow.xaml.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAkwCwAAAAAAAAA",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAgwEsAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-28T14:28:07.369Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SaveData.cs",
+              "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\SaveData.cs",
+              "RelativeDocumentMoniker": "GraphicRedactor\\SaveData.cs",
+              "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\SaveData.cs",
+              "RelativeToolTip": "GraphicRedactor\\SaveData.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-24T10:41:28.087Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LineCoordinates.cs",
+              "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\LineCoordinates.cs",
+              "RelativeDocumentMoniker": "GraphicRedactor\\LineCoordinates.cs",
+              "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\LineCoordinates.cs",
+              "RelativeToolTip": "GraphicRedactor\\LineCoordinates.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAA0wBcAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-21T09:22:42.337Z",
+              "EditorCaption": ""
             }
           ]
         }
