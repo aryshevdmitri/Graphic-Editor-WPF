@@ -151,12 +151,10 @@ namespace GraphicRedactor
         }
 
         // 2D проецирование
-        public static (double, double) Projection(double x, double y, double p, double q)
+        public static void Projection(ref double x, ref double y, double p, double q)
         {
             x /= x * p + y * q + 1;
             y /= x * p + y * q + 1;
-
-            return (x, y);
         }
     }
 }

@@ -24,6 +24,8 @@ namespace GraphicRedactor
                 Q = q;
 
                 this.Close();
+
+                MessageBox.Show($"Выполнена операция проецирования.\n p = {p}\n q = {q}");
             }
             else
             {

@@ -21,9 +21,11 @@ namespace GraphicRedactor
             if (axisString.Length == 1)
             {
                 Axis = axisString[0]; 
-                if (Axis == 'y' || Axis == 'x')
+                if (Axis == 'y' || Axis == 'x' || Axis == 'z')
                 {
                     this.Close();
+
+                    MessageBox.Show($"Выполнена операция зеркалирования.\n Ось - {Axis}");
                 }
                 else
                 {

@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace GraphicRedactor
 {
@@ -21,6 +9,7 @@ namespace GraphicRedactor
     {
         public double M { get; set; }
         public double N { get; set; }
+        public double K { get; set; }
 
         public Transfer()
         {
@@ -29,16 +18,19 @@ namespace GraphicRedactor
 
         private void ButtonContinue_Click(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(TextBoxM.Text, out double m) && double.TryParse(TextBoxN.Text, out double n) && m != 0 && n != 0)
+            if (double.TryParse(TextBoxM.Text, out double m) && double.TryParse(TextBoxN.Text, out double n) && double.TryParse(TextBoxK.Text, out double k))
             {
                 M = m;
                 N = n;
+                K = k;
 
                 this.Close();
+
+                MessageBox.Show($"Выполнена операция смещения.\n m = {m}\n n = {n}\n k = {k}");
             }
             else
             {
-                MessageBox.Show("Введите корректные значения m и n.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Введите корректные значения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

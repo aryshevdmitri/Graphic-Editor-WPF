@@ -9,24 +9,28 @@ namespace GraphicRedactor
     {
         public double A { get; set; }
         public double D { get; set; }
+        public double E { get; set; }
 
         public Scaling()
         {
             InitializeComponent();
         }
 
-        private void ButtonContinue_Click(object sender, RoutedEventArgs e)
+        private void ButtonContinue_Click(object sender, RoutedEventArgs ee)
         {
-            if (double.TryParse(TextBoxA.Text, out double a) && double.TryParse(TextBoxD.Text, out double d))
+            if (double.TryParse(TextBoxA.Text, out double a) && double.TryParse(TextBoxD.Text, out double d) && double.TryParse(TextBoxE.Text, out double e))
             {
                 A = a;
                 D = d;
+                E = e;
 
                 this.Close();
+
+                MessageBox.Show($"Выполнена операция масштабирования.\n a = {a}\n d = {d}\n e = {e}");
             }
             else
             {
-                MessageBox.Show("Введите корректные значения a и d.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Введите корректные значения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

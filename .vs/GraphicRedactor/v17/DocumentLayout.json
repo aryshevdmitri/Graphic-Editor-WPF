@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\savedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\savedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\graphicredactor\\linecoordinates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\linecoordinates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\operations\\affinetransformations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\operations\\affinetransformations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|c:\\users\\eddie\\source\\repos\\graphicredactor\\graphicredactor\\linecoordinates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEF544B3-28FF-4FFD-853D-E652DF698DAB}|GraphicRedactor\\GraphicRedactor.csproj|solutionrelative:graphicredactor\\linecoordinates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,11 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\MainWindow.xaml",
               "RelativeDocumentMoniker": "GraphicRedactor\\MainWindow.xaml",
@@ -42,6 +42,10 @@
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
@@ -49,40 +53,35 @@
               "RelativeDocumentMoniker": "GraphicRedactor\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\MainWindow.xaml.cs",
               "RelativeToolTip": "GraphicRedactor\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAgwEsAAAApAAAA",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAIwHoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T14:28:07.369Z",
-              "IsPinned": true,
+              "WhenOpened": "2024-03-24T12:46:55.974Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SaveData.cs",
-              "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\SaveData.cs",
-              "RelativeDocumentMoniker": "GraphicRedactor\\SaveData.cs",
-              "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\SaveData.cs",
-              "RelativeToolTip": "GraphicRedactor\\SaveData.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-24T10:41:28.087Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "AffineTransformations.cs",
+              "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\AffineTransformations.cs",
+              "RelativeDocumentMoniker": "GraphicRedactor\\Operations\\AffineTransformations.cs",
+              "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\Operations\\AffineTransformations.cs",
+              "RelativeToolTip": "GraphicRedactor\\Operations\\AffineTransformations.cs",
+              "ViewState": "AQIAAIIAAAAAAAAAAAAYwJ0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-24T11:55:28.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "LineCoordinates.cs",
               "DocumentMoniker": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\LineCoordinates.cs",
               "RelativeDocumentMoniker": "GraphicRedactor\\LineCoordinates.cs",
               "ToolTip": "C:\\Users\\eddie\\source\\repos\\GraphicRedactor\\GraphicRedactor\\LineCoordinates.cs",
               "RelativeToolTip": "GraphicRedactor\\LineCoordinates.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAA0wBcAAAAdAAAA",
+              "ViewState": "AQIAAFgAAAAAAAAAAAAUwDEAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-21T09:22:42.337Z",
+              "WhenOpened": "2024-03-24T12:08:17.535Z",
               "EditorCaption": ""
             }
           ]

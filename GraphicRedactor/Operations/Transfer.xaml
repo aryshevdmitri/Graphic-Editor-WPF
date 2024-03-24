@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicRedactor"
         mc:Ignorable="d"
-        Title="Смещение" Height="200" Width="400">
+        Title="Смещение" Height="200" Width="200">
     <Window.Resources>
         <Style x:Key="HintTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Template">
@@ -33,28 +33,34 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="75*"></RowDefinition>
-            <RowDefinition Height="15*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="60*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock Text="Выбрана операция смещения, введите значения m и n"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Выбрана операция смещения, введите значения m, n и k"/>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <TextBox Name="TextBoxM" Tag="m"  Style="{StaticResource HintTextBox}"/>
+                <TextBox Name="TextBoxM" Tag="m" Style="{StaticResource HintTextBox}"/>
             </Grid>
 
             <Grid Grid.Column="1">
                 <TextBox Name="TextBoxN" Tag="n" Style="{StaticResource HintTextBox}"/>
             </Grid>
+
+            <Grid Grid.Column="2">
+                <TextBox Name="TextBoxK" Tag="k" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+
         </Grid>
 
         <Grid Grid.Row="2">

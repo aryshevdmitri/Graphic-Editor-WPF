@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicRedactor"
         mc:Ignorable="d"
-        Title="Масштабирование" Height="200" Width="400">
+        Title="Масштабирование" Height="200" Width="200">
     <Window.Resources>
         <Style x:Key="HintTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Template">
@@ -33,17 +33,18 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="75*"></RowDefinition>
-            <RowDefinition Height="15*"></RowDefinition>
+            <RowDefinition Height="30*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock Text="Выбрана операция масштабирования, введите значения a и d."/>
+            <TextBlock TextWrapping="Wrap" Text="Выбрана операция масштабирования, введите значения a, d, e."/>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -54,6 +55,10 @@
 
             <Grid Grid.Column="1">
                 <TextBox Name="TextBoxD" Tag="d" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <TextBox Name="TextBoxE" Tag="e" Style="{StaticResource HintTextBox}"/>
             </Grid>
         </Grid>
 

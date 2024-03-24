@@ -50,84 +50,6 @@ namespace GraphicRedactor
         }
 
         /// <summary>
-        /// Save data from DrawingCanvas in .xml
-        /// </summary>
-        /// <param name="canvasData"></param>
-        public void SaveCanvasData(CanvasData canvasData)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                Filter = "XML Files (*.xml)|*.xml"
-            };
-
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                string filePath = saveFileDialog.FileName;
-
-                canvasData.Lines = new List<LineData>();
-                foreach (var child in DrawingCanvas.Children)
-                {
-                    if (child is Line line)
-                    {
-                        canvasData.Lines.Add(new LineData
-                        {
-                            X1 = line.X1,
-                            Y1 = line.Y1,
-                            X2 = line.X2,
-                            Y2 = line.Y2,
-                            Tag = (string)line.Tag
-                        });
-                    }
-                }
-
-                XmlSerializer serializer = new XmlSerializer(typeof(CanvasData));
-                using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                    serializer.Serialize(stream, canvasData);
-            }
-        }
-
-        /// <summary>
-        /// Load data for DrawingCanvas from .xml file
-        /// </summary>
-        /// <returns></returns>
-        public CanvasData LoadCanvasData()
-        {
-            CanvasData canvasData = null; // Инициализация переменной canvasData
-
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "XML Files (*.xml)|*.xml"
-            };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string filePath = openFileDialog.FileName;
-
-                XmlSerializer serializer = new XmlSerializer(typeof(CanvasData));
-                using (FileStream stream = new FileStream(filePath, FileMode.Open))
-                {
-                    canvasData = (CanvasData)serializer.Deserialize(stream);
-
-                    foreach (var lineData in canvasData.Lines)
-                    {
-                        Line line = new Line
-                        {
-                            X1 = lineData.X1,
-                            Y1 = lineData.Y1,
-                            X2 = lineData.X2,
-                            Y2 = lineData.Y2,
-                            Stroke = Brushes.Black,
-                            StrokeThickness = lineThickness
-                        };
-
-                        DrawingCanvas.Children.Add(line);
-                    }
-                }
-            }
-
-            return canvasData;
-        }
-
-        /// <summary>
         /// Initilization of two hidden ellipses on DrawingCanvas
         /// </summary>
         private void InitializeEllipses()
@@ -161,6 +83,87 @@ namespace GraphicRedactor
             }
         }
 
+        /// <summary>
+        /// Save data from DrawingCanvas in .xml
+        /// </summary>
+        /// <param name="canvasData"></param>
+        public void SaveCanvasData(CanvasData canvasData)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "XML Files (*.xml)|*.xml"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                canvasData.Lines = new List<LineData>();
+                foreach (var child in DrawingCanvas.Children)
+                {
+                    if (child is Line line && line.Tag is LineCoordinates)
+                    {
+                        LineCoordinates lineCoordinates = line.Tag as LineCoordinates;
+                        canvasData.Lines.Add(new LineData
+                        {
+                            X1 = line.X1,
+                            Y1 = line.Y1,
+                            X2 = line.X2,
+                            Y2 = line.Y2,
+                            Tag = lineCoordinates
+                        });
+                    }
+                }
+
+                XmlSerializer serializer = new XmlSerializer(typeof(CanvasData));
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    serializer.Serialize(stream, canvasData);
+            }
+        }
+
+        /// <summary>
+        /// Load data for DrawingCanvas from .xml file
+        /// </summary>
+        /// <returns></returns>
+        public CanvasData LoadCanvasData()
+        {
+            CanvasData canvasData = null;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "XML Files (*.xml)|*.xml"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+
+                XmlSerializer serializer = new XmlSerializer(typeof(CanvasData));
+                using (FileStream stream = new FileStream(filePath, FileMode.Open))
+                {
+                    canvasData = (CanvasData)serializer.Deserialize(stream);
+
+                    foreach (var lineData in canvasData.Lines)
+                    {
+                        Line line = new Line
+                        {
+                            X1 = lineData.X1,
+                            Y1 = lineData.Y1,
+                            X2 = lineData.X2,
+                            Y2 = lineData.Y2,
+                            Tag = lineData.Tag,
+                            Stroke = Brushes.Black,
+                            StrokeThickness = lineThickness
+                        };
+
+                        DrawingCanvas.Children.Add(line);
+                    }
+                }
+            }
+
+            return canvasData;
+        }
+
         private Line GetLineUnderMouse(Point mousePosition)
         {
             // Проверяем, попала ли мышь в какую-либо линию на холсте
@@ -186,17 +189,7 @@ namespace GraphicRedactor
                 StrokeThickness = lineThickness,
             };
 
-            LineCoordinates coordinates = new LineCoordinates
-            {
-                X1 = x1,
-                Y1 = y1,
-                Z1 = z1,
-                X2 = x2,
-                Y2 = y2,
-                Z2 = z2
-            };
-
-            line.Tag = coordinates;
+            LineCoordinates.SetValuesForTag(line, x1, y1, z1, x2, y2, z2);
 
             return line;
         }
@@ -207,29 +200,12 @@ namespace GraphicRedactor
             {
                 if (child is Line line && line.Tag != null)
                 {
-                    LineCoordinates lineCoordinates = line.Tag as LineCoordinates;
-
-                    double x1 = lineCoordinates.X1;
-                    double y1 = lineCoordinates.Y1;
-                    double z1 = lineCoordinates.Z1;
-                    double x2 = lineCoordinates.X2;
-                    double y2 = lineCoordinates.Y2;
-                    double z2 = lineCoordinates.Z2;
+                    (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
 
                     if (isXY)
-                    {
-                        line.X1 = x1;
-                        line.Y1 = y1;
-                        line.X2 = x2;
-                        line.Y2 = y2;
-                    }
+                        LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                     else if (isXZ)
-                    {
-                        line.X1 = x1;
-                        line.Y1 = z1;
-                        line.X2 = x2;
-                        line.Y2 = z2;
-                    }
+                        LineCoordinates.SetValuesForLine(line, x1, z1, x2, z2);
                 }
             }
         }
@@ -374,14 +350,17 @@ namespace GraphicRedactor
 
                             double transferM = transferWindow.M;
                             double transferN = transferWindow.N;
+                            double transferK = transferWindow.K;
 
-                            if (transferM != 0 && transferN != 0)
+                            foreach (Line line in groupElements)
                             {
-                                foreach (Line line in groupElements)
-                                {
-                                    (line.X1, line.Y1) = AffineTransformations.Transfer(line.X1, line.Y1, transferM, transferN);
-                                    (line.X2, line.Y2) = AffineTransformations.Transfer(line.X2, line.Y2, transferM, transferN);
-                                }
+                                (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
+
+                                AffineTransformations.Transfer(ref x1, ref y1, ref z1, transferM, transferN, transferK);
+                                AffineTransformations.Transfer(ref x2, ref y2, ref z2, transferM, transferN, transferK);
+
+                                LineCoordinates.SetValuesForTag(line, x1, y1, z1, x2, y2, z2);
+                                LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                             }
 
                             break;
@@ -391,14 +370,17 @@ namespace GraphicRedactor
 
                             double scalingA = scalingWindow.A;
                             double scalingD = scalingWindow.D;
+                            double scalingE = scalingWindow.E;
 
-                            if (scalingA != 0 && scalingD != 0)
+                            foreach (Line line in groupElements)
                             {
-                                foreach (Line line in groupElements)
-                                {
-                                    (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, scalingA, scalingD);
-                                    (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, scalingA, scalingD);
-                                }
+                                (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
+
+                                AffineTransformations.Scaling(ref x1, ref y1, ref z1, scalingA, scalingD, scalingE);
+                                AffineTransformations.Scaling(ref x2, ref y2, ref z2, scalingA, scalingD, scalingE);
+
+                                LineCoordinates.SetValuesForTag(line, x1, y1, z1, x2, y2, z2);
+                                LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                             }
 
                             break;
@@ -413,8 +395,13 @@ namespace GraphicRedactor
                             {
                                 foreach (Line line in groupElements)
                                 {
-                                    (line.X1, line.Y1) = AffineTransformations.Scaling(line.X1, line.Y1, fullScalingS);
-                                    (line.X2, line.Y2) = AffineTransformations.Scaling(line.X2, line.Y2, fullScalingS);
+                                    (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
+
+                                    AffineTransformations.Scaling(ref x1, ref y1, ref z1, fullScalingS);
+                                    AffineTransformations.Scaling(ref x2, ref y2, ref z2, fullScalingS);
+
+                                    LineCoordinates.SetValuesForTag(line, x1, y1, z1, x2, y2, z2);
+                                    LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                                 }
                             }
 
@@ -425,16 +412,22 @@ namespace GraphicRedactor
                             rotationWindow.ShowDialog();
 
                             int rotationA = rotationWindow.A;
+                            char rotationAxis = rotationWindow.Axis;
 
-                            if (rotationA != 0)
+                            if (rotationAxis != ' ')
                             {
                                 foreach (Line line in groupElements)
                                 {
-                                    (line.X1, line.Y1) = AffineTransformations.Rotation(line.X1, line.Y1, rotationA);
-                                    (line.X2, line.Y2) = AffineTransformations.Rotation(line.X2, line.Y2, rotationA);
+                                    (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
+
+                                    AffineTransformations.Rotation(ref x1, ref y1, ref z1, rotationA, rotationAxis);
+                                    AffineTransformations.Rotation(ref x2, ref y2, ref z2, rotationA, rotationAxis);
+
+                                    LineCoordinates.SetValuesForTag(line, x1, y1, z1, x2, y2, z2);
+                                    LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                                 }
                             }
-
+                            
                             break;
                         case "Зеркалирование":
                             Mirroring mirroringWindow = new Mirroring();
@@ -446,26 +439,33 @@ namespace GraphicRedactor
                             {
                                 foreach (Line line in groupElements)
                                 {
-                                    (line.X1, line.Y1) = AffineTransformations.Mirroring(line.X1, line.Y1, mirroringAxis);
-                                    (line.X2, line.Y2) = AffineTransformations.Mirroring(line.X2, line.Y2, mirroringAxis);
+                                    (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
+
+                                    AffineTransformations.Mirroring(ref x1, ref y1, ref z1, mirroringAxis);
+                                    AffineTransformations.Mirroring(ref x2, ref y2, ref z2, mirroringAxis);
+
+                                    LineCoordinates.SetValuesForTag(line, x1, y1, z1, x2, y2, z2);
+                                    LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                                 }
                             }
 
                             break;
-                        case "Проецирование":
+                        case "Проецирование (2D)":
                             Projection projectionWindow = new Projection();
                             projectionWindow.ShowDialog();
 
                             double projectionP = projectionWindow.P;
                             double projectionQ = projectionWindow.Q;
 
-                            if (projectionP != 0 && projectionQ != 0)
+                            foreach (Line line in groupElements)
                             {
-                                foreach (Line line in groupElements)
-                                {
-                                    (line.X1, line.Y1) = AffineTransformations.Projection(line.X1, line.Y1, projectionP, projectionQ);
-                                    (line.X2, line.Y2) = AffineTransformations.Projection(line.X2, line.Y2, projectionP, projectionQ);
-                                }
+                                (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
+
+                                AffineTransformations.Projection(ref x1, ref y1, ref z1, projectionP, projectionQ);
+                                AffineTransformations.Projection(ref x2, ref y2, ref z2, projectionP, projectionQ);
+
+                                LineCoordinates.SetValuesForTag(line, x1, y1, z1, x2, y2, z2);
+                                LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                             }
 
                             break;
@@ -486,12 +486,9 @@ namespace GraphicRedactor
         {
             if (sender is ComboBox comboBox)
             {
-                ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
-
-                if (selectedItem != null)
+                if (comboBox.SelectedItem is ComboBoxItem selectedItem)
                 {
-                    StackPanel stackPanel = selectedItem.Content as StackPanel;
-                    if (stackPanel != null)
+                    if (selectedItem.Content is StackPanel stackPanel)
                     {
                         var textBlock = stackPanel.Children[1] as TextBlock;
                         var colorName = textBlock.Text;
@@ -546,6 +543,38 @@ namespace GraphicRedactor
             }
         }
 
+        private void CoordinatesTextBlocksIsNull()
+        {
+            CoordinatesTextBlockA.Text = null;
+            CoordinatesTextBlockB.Text = null;
+            CoordinatesTextBlockC.Text = null;
+            CoordinatesTextBlockSum.Text = null;
+
+            CoordinatesTextBlockX1.Text = null;
+            CoordinatesTextBlockX2.Text = null;
+            CoordinatesTextBlockY1.Text = null;
+            CoordinatesTextBlockY2.Text = null;
+            CoordinatesTextBlockZ1.Text = null;
+            CoordinatesTextBlockZ2.Text = null;
+        }
+
+        private void UpdateCoordinatesTextBlocks(Line line)
+        {
+            (double x1, double y1, double z1, double x2, double y2, double z2) = LineCoordinates.GetValuesFromTag(line);
+
+            CoordinatesTextBlockA.Text = $"{y2 - y1}";
+            CoordinatesTextBlockB.Text = $"{x1 - x2}";
+            CoordinatesTextBlockC.Text = $"{x2 * y1 - x1 * y2}";
+            CoordinatesTextBlockSum.Text = $"{y2 - y1}x + {x1 - x2}y + {x2 * y1 - x1 * y2} = 0";
+
+            CoordinatesTextBlockX1.Text = $"{x1}";
+            CoordinatesTextBlockY1.Text = $"{y1}";
+            CoordinatesTextBlockZ1.Text = $"{z1}";
+            CoordinatesTextBlockX2.Text = $"{x2}";
+            CoordinatesTextBlockY2.Text = $"{y2}";
+            CoordinatesTextBlockZ2.Text = $"{z2}";
+        }
+
         private void RemoveSelectAllMenuItem_Click(object sender, RoutedEventArgs e)
         {
             groupElements.Clear();
@@ -572,17 +601,7 @@ namespace GraphicRedactor
                 }
             }
 
-            CoordinatesTextBlockA.Text = "A";
-            CoordinatesTextBlockB.Text = "B";
-            CoordinatesTextBlockC.Text = "C";
-            CoordinatesTextBlockSum.Text = "Уравнение";
-
-            CoordinatesTextBlockX1.Text = "X1";
-            CoordinatesTextBlockX2.Text = "X2";
-            CoordinatesTextBlockY1.Text = "Y1";
-            CoordinatesTextBlockY2.Text = "Y2";
-            CoordinatesTextBlockZ1.Text = "Z1";
-            CoordinatesTextBlockZ2.Text = "Z2";
+            CoordinatesTextBlocksIsNull();
         }
 
         private void DeleteAllMenuItem_Click(object sender, RoutedEventArgs e)
@@ -595,17 +614,7 @@ namespace GraphicRedactor
                     DrawingCanvas.Children.Remove(children);
             }
 
-            CoordinatesTextBlockA.Text = "A";
-            CoordinatesTextBlockB.Text = "B";
-            CoordinatesTextBlockC.Text = "C";
-            CoordinatesTextBlockSum.Text = "Уравнение";
-
-            CoordinatesTextBlockX1.Text = "X1";
-            CoordinatesTextBlockX2.Text = "X2";
-            CoordinatesTextBlockY1.Text = "Y1";
-            CoordinatesTextBlockY2.Text = "Y2";
-            CoordinatesTextBlockZ1.Text = "Z1";
-            CoordinatesTextBlockZ2.Text = "Z2";
+            CoordinatesTextBlocksIsNull();
         }
 
         private void ShowTwoDimension_Click(object sender, RoutedEventArgs e)
@@ -830,6 +839,8 @@ namespace GraphicRedactor
                         line.Y1 += deltaY;
                         line.X2 += deltaX;
                         line.Y2 += deltaY;
+
+                        LineCoordinates.UpdateTagY(line, line.X1, line.Y1, line.X2, line.Y2);
                     }
                 }
 
@@ -848,30 +859,11 @@ namespace GraphicRedactor
             if (isDragging)
             {
                 isDragging = false;
-                isDraggingEllipse = false;
             }
 
-            if (isGrouping | isEditing && selectedLine != null)
+            if (isGrouping | isEditing | isDraggingEllipse && selectedLine != null)
             {
-                LineCoordinates lineCoordinates = selectedLine.Tag as LineCoordinates;
-                double x1 = lineCoordinates.X1;
-                double y1 = lineCoordinates.Y1;
-                double z1 = lineCoordinates.Z1;
-                double x2 = lineCoordinates.X2;
-                double y2 = lineCoordinates.Y2;
-                double z2 = lineCoordinates.Z2;
-
-                CoordinatesTextBlockA.Text = $"{y2 - y1}";
-                CoordinatesTextBlockB.Text = $"{x1 - x2}";
-                CoordinatesTextBlockC.Text = $"{x2 * y1 - x1 * y2}";
-                CoordinatesTextBlockSum.Text = $"{y2 - y1}x + {x1 - x2}y + {x2 * y1 - x1 * y2} = 0";
-
-                CoordinatesTextBlockX1.Text = $"{x1}";
-                CoordinatesTextBlockX2.Text = $"{x2}";
-                CoordinatesTextBlockY1.Text = $"{y1}";
-                CoordinatesTextBlockY2.Text = $"{y2}";
-                CoordinatesTextBlockZ1.Text = $"{z1}";
-                CoordinatesTextBlockZ2.Text = $"{z2}";
+                UpdateCoordinatesTextBlocks(selectedLine);
             }
         }
 
@@ -958,9 +950,9 @@ namespace GraphicRedactor
                 selectedLine.Y2 += deltaY;
 
                 if (isXY)
-                    LineCoordinates.UpdateTagY2(selectedLine, selectedLine.X1, selectedLine.Y1);
+                    LineCoordinates.UpdateTagY2(selectedLine, selectedLine.X2, selectedLine.Y2);
                 else if (isXZ)
-                    LineCoordinates.UpdateTagZ2(selectedLine, selectedLine.X1, selectedLine.Y1);
+                    LineCoordinates.UpdateTagZ2(selectedLine, selectedLine.X2, selectedLine.Y2);
 
                 Canvas.SetLeft(endEllipse, mousePosition.X - 5);
                 Canvas.SetTop(endEllipse, mousePosition.Y - 5);

@@ -93,25 +93,28 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="15*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
-                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
-                    <ColumnDefinition Width="45*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Режим работы" Style="{StaticResource DefaultTextBlock}"/>
                 <TextBlock Grid.Column="1" Text="Операция (для группы)" Style="{StaticResource DefaultTextBlock}"/>
-                <TextBlock Grid.Column="2" Text="Цвет линии" Style="{StaticResource DefaultTextBlock}"/>
-                <TextBlock Grid.Column="3" Text="Толщина линии" Style="{StaticResource DefaultTextBlock}"/>
-                <TextBlock Grid.Column="4" Text="Координаты" Style="{StaticResource DefaultTextBlock}"/>
+                <TextBlock Grid.Column="2" Text="Координаты" Style="{StaticResource DefaultTextBlock}"/>
+                <TextBlock Grid.Column="3" Text="Кол-во элементов в группе" Style="{StaticResource DefaultTextBlock}"/>
+                <TextBlock Grid.Column="4" Text="Цвет линии" Style="{StaticResource DefaultTextBlock}"/>
+                <TextBlock Grid.Column="5" Text="Толщина линии" Style="{StaticResource DefaultTextBlock}"/>
             </Grid>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="15*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
-                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
-                    <ColumnDefinition Width="45*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Grid.Column="0" Name="ModeComboBox" Style="{StaticResource DefaultComboBox}" SelectionChanged="ModeComboBox_SelectionChanged">
@@ -126,10 +129,18 @@
                     <ComboBoxItem Content="Полное масштабирование" Name="FullScalingComboBoxItem"/>
                     <ComboBoxItem Content="Вращение" Name="RotationComboBoxItem"/>
                     <ComboBoxItem Content="Зеркалирование" Name="MirroringComboBoxItem"/>
-                    <ComboBoxItem Content="Проецирование" Name="ProjectionComboBoxItem"/>
+                    <ComboBoxItem Content="Проецирование (2D)" Name="ProjectionComboBoxItem"/>
                 </ComboBox>
 
-                <ComboBox  Grid.Column="2" Name="LineColorComboBox" Style="{StaticResource DefaultComboBox}" SelectionChanged="LineColorComboBox_SelectionChanged">
+                <ComboBox Grid.Column="2" Name="CoordinatesComboBox" Style="{StaticResource DefaultComboBox}" SelectionChanged="CoordinatesComboBox_SelectionChanged">
+                    <ComboBoxItem IsSelected="True" Content="XY" Name="ComboBoxItemXY"/>
+                    <ComboBoxItem Content="XZ" Name="ComboBoxItemXZ"/>
+                    <ComboBoxItem Content="Трехмерная проекция" Name="ComboBoxItemXYZ"/>
+                </ComboBox>
+
+                <TextBlock Grid.Column="3" Style="{StaticResource DefaultTextBlock}" Text="{Binding Path=GroupElements.Count}"/>
+
+                <ComboBox  Grid.Column="4" Name="LineColorComboBox" Style="{StaticResource DefaultComboBox}" SelectionChanged="LineColorComboBox_SelectionChanged">
                     <ComboBoxItem IsSelected="True">
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Fill="Black" Width="16" Height="16" Margin="0,2,5,2"/>
@@ -159,16 +170,10 @@
                     </ComboBoxItem>
                 </ComboBox>
 
-                <DockPanel Grid.Column="3">
+                <DockPanel Grid.Column="5">
                     <TextBox Text="{Binding ElementName=LineValueSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Center" Width="40"/>
                     <Slider Name="LineValueSlider" Maximum="15" TickFrequency="1" Value="2" TickPlacement="BottomRight" IsSnapToTickEnabled="True" ValueChanged="LineValueSlider_ValueChanged"/>
                 </DockPanel>
-
-                <ComboBox Grid.Column="4" Name="CoordinatesComboBox" Style="{StaticResource DefaultComboBox}" SelectionChanged="CoordinatesComboBox_SelectionChanged">
-                    <ComboBoxItem IsSelected="True" Content="XY" Name="ComboBoxItemXY"/>
-                    <ComboBoxItem Content="XZ" Name="ComboBoxItemXZ"/>
-                    <ComboBoxItem Content="Трехмерная проекция" Name="ComboBoxItemXYZ"/>
-                </ComboBox>
             </Grid>
 
             <Grid Grid.Row="0">
@@ -182,7 +187,7 @@
                         <MenuItem Header="Cнять выделение со всех объектов" Name="RemoveSelectAllMenuItem" Click="RemoveSelectAllMenuItem_Click"></MenuItem>
                         <MenuItem Header="Удалить все элементы" Name="DeleteAllMenuItem" Click="DeleteAllMenuItem_Click"></MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Вывод координаты">
+                    <MenuItem Header="Вывод осей">
                         <MenuItem Header="Вывести двухмерную систему координат" Name="ShowTwoDimension" Click="ShowTwoDimension_Click"/>
                         <MenuItem Header="Убрать двухмерную систему координат" Name="UnshowTwoDimension" Click="UnshowTwoDimension_Click"/>
                     </MenuItem>

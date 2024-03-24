@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicRedactor"
         mc:Ignorable="d"
-        Title="Проецирование" Height="200" Width="400">
+        Title="Проецирование" Height="200" Width="200">
     <Window.Resources>
         <Style x:Key="HintTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Template">
@@ -33,13 +33,13 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="75*"></RowDefinition>
-            <RowDefinition Height="15*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="60*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock Text="Выбрана операция проецирование, введите значения p и q"/>
+            <TextBlock TextWrapping="Wrap" Text="Выбрана операция проецирования, введите значения p и q"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -49,7 +49,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <TextBox Name="TextBoxP" Tag="p"  Style="{StaticResource HintTextBox}"/>
+                <TextBox Name="TextBoxP" Tag="p" Style="{StaticResource HintTextBox}"/>
             </Grid>
 
             <Grid Grid.Column="1">

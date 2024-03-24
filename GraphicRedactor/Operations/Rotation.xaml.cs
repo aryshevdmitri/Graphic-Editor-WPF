@@ -20,6 +20,7 @@ namespace GraphicRedactor
     public partial class Rotation : Window
     {
         public int A { get; set; }
+        public char Axis { get; set; }
 
         public Rotation()
         {
@@ -28,15 +29,18 @@ namespace GraphicRedactor
 
         private void ButtonContinue_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(TextBoxA.Text, out int a) && a != 0)
+            if (int.TryParse(TextBoxA.Text, out int a) && char.TryParse(TextBoxAxis.Text, out char axis))
             {
                 A = a;
+                Axis = axis;
 
                 this.Close();
+
+                MessageBox.Show($"Выполнена операция вращения.\n Угол = {a}\n Ось - {axis}");
             }
             else
             {
-                MessageBox.Show("Введите корректное значение a.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Введите корректное значение", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
