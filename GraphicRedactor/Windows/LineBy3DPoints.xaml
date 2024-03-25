@@ -1,0 +1,90 @@
+﻿<Window x:Class="GraphicRedactor.LineBy3DPoints"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphicRedactor"
+        mc:Ignorable="d"
+        Title="Создание линии" Height="300" Width="300">
+    <Window.Resources>
+        <Style x:Key="HintTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                <TextBlock x:Name="HintTextBlock" Text="{TemplateBinding Tag}" Visibility="Collapsed" Margin="2,0,0,0" Foreground="Gray" HorizontalAlignment="Center" FontSize="14" FontStyle="Italic"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="HintTextBlock" Property="Visibility" Value="Visible"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="35*"></RowDefinition>
+            <RowDefinition Height="35*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Задайте точки для новой линии"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <TextBox Name="TextBoxX1" Tag="x1" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <TextBox Name="TextBoxY1" Tag="y1" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <TextBox Name="TextBoxZ1" Tag="z1" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <TextBox Name="TextBoxX2" Tag="x2" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <TextBox Name="TextBoxY2" Tag="y2" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <TextBox Name="TextBoxZ2" Tag="z2" Style="{StaticResource HintTextBox}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Button Name="ButtonContinue" Content="Применить" Click="ButtonContinue_Click"></Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,10 +1,12 @@
 ﻿
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\App.xaml;;
-FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Mirroring.xaml;;
-FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\FullScaling.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\3DProjection.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\LineBy3DPoints.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\Mirroring.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\FullScaling.xaml;;
 FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\MainWindow.xaml;;
-FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Scaling.xaml;;
-FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Transfer.xaml;;
-FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Rotation.xaml;;
-FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Operations\Projection.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\Scaling.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\Transfer.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\Rotation.xaml;;
+FC:\Users\eddie\source\repos\GraphicRedactor\GraphicRedactor\Windows\Projection.xaml;;
 

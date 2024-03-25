@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicRedactor"
         mc:Ignorable="d"
-        Title="Графический редактор" Height="720" Width="1280">
+        Title="Графический редактор" Height="720" Width="1280"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <Style TargetType="Button" x:Key="DefaultButton">
             <Setter Property="Background" Value="#21295C"/>
@@ -138,7 +139,7 @@
                     <ComboBoxItem Content="Трехмерная проекция" Name="ComboBoxItemXYZ"/>
                 </ComboBox>
 
-                <TextBlock Grid.Column="3" Style="{StaticResource DefaultTextBlock}" Text="{Binding Path=GroupElements.Count}"/>
+                <TextBlock Grid.Column="3" Style="{StaticResource DefaultTextBlock}" Text="{Binding GroupElements.Capacity}"/>
 
                 <ComboBox  Grid.Column="4" Name="LineColorComboBox" Style="{StaticResource DefaultComboBox}" SelectionChanged="LineColorComboBox_SelectionChanged">
                     <ComboBoxItem IsSelected="True">
@@ -181,6 +182,10 @@
                     <MenuItem Header="Файл">
                         <MenuItem Header="Сохранить" Name="SaveMenuItem" Click="SaveMenuItem_Click"></MenuItem>
                         <MenuItem Header="Загрузить" Name="UploadMenuItem" Click="UploadMenuItem_Click"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Ввод">
+                        <MenuItem Header="Линия по точкам" Name="LineBy3DPoints" Click="LineBy3DPoints_Click"/>
+                        <MenuItem Header="Заготовка: Домик" Name="HouseTemplate" Click="HouseTemplate_Click"/>
                     </MenuItem>
                     <MenuItem Header="Действия">
                         <MenuItem Header="Выделить все объекты" Name="SelectAllMenuItem" Click="SelectAllMenuItem_Click"></MenuItem>

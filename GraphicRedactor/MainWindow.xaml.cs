@@ -41,7 +41,7 @@ namespace GraphicRedactor
         private Ellipse startEllipse;
         private Ellipse endEllipse;
 
-        private List<Line> groupElements = new List<Line>();
+        public List<Line> groupElements = new List<Line>();
 
         public MainWindow()
         {
@@ -427,7 +427,7 @@ namespace GraphicRedactor
                                     LineCoordinates.SetValuesForLine(line, x1, y1, x2, y2);
                                 }
                             }
-                            
+
                             break;
                         case "Зеркалирование":
                             Mirroring mirroringWindow = new Mirroring();
@@ -664,12 +664,24 @@ namespace GraphicRedactor
                             isXY = true;
                             RedrawLines();
                             break;
+
                         case "XZ":
                             isXY = false;
                             isXZ = true;
                             RedrawLines();
                             break;
+
                         case "Трехмерная проекция":
+                            if (groupElements.Count == 0 && CoordinatesComboBox.SelectedItem != null)
+                            {
+                                MessageBox.Show("Добавьте элементы в группу", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                                CoordinatesComboBox.SelectedItem = null;
+                            }
+                            else
+                            {
+                                _3DProjection threeDProjection = new _3DProjection(groupElements);
+                                threeDProjection.ShowDialog();
+                            }
                             break;
                     }
                 }
@@ -962,6 +974,116 @@ namespace GraphicRedactor
                 Canvas.SetLeft(startEllipse, selectedLine.X1 - 5);
                 Canvas.SetTop(startEllipse, selectedLine.Y1 - 5);
             }
+        }
+
+        private void HouseTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            Line line1 = new Line();
+            Line line2 = new Line();
+            Line line3 = new Line();
+            Line line4 = new Line();
+            Line line5 = new Line();
+            Line line6 = new Line();
+            Line line7 = new Line();
+            Line line8 = new Line();
+            Line line9 = new Line();
+            Line line10 = new Line();
+            Line line11 = new Line();
+            Line line12 = new Line();
+            Line line13 = new Line();
+            Line line14 = new Line();
+            Line line15 = new Line();
+            Line line16 = new Line();
+            Line line17 = new Line();
+
+            LineCoordinates.SetValuesForTag(line1, 0, 0, 30, 0, 0, 0);
+            groupElements.Add(line1);
+
+            LineCoordinates.SetValuesForTag(line2, 0, 0, 30, 0, 30, 30);
+            groupElements.Add(line2);
+
+            LineCoordinates.SetValuesForTag(line3, 0, 0, 30, 30, 0, 30);
+            groupElements.Add(line3);
+
+            LineCoordinates.SetValuesForTag(line4, 0, 0, 0, 30, 0, 0);
+            groupElements.Add(line4);
+
+            LineCoordinates.SetValuesForTag(line5, 0, 0, 0, 0, 30, 0);
+            groupElements.Add(line5);
+
+            LineCoordinates.SetValuesForTag(line6, 30, 0, 0, 30, 0, 30);
+            groupElements.Add(line6);
+
+            LineCoordinates.SetValuesForTag(line7, 30, 0, 0, 30, 30, 0);
+            groupElements.Add(line7);
+
+            LineCoordinates.SetValuesForTag(line8, 30, 0, 30, 30, 30, 30);
+            groupElements.Add(line8);
+
+            LineCoordinates.SetValuesForTag(line9, 30, 30, 30, 0, 30, 30);
+            groupElements.Add(line9);
+
+            LineCoordinates.SetValuesForTag(line10, 30, 30, 30, 20, 40, 30);
+            groupElements.Add(line10);
+
+            LineCoordinates.SetValuesForTag(line11, 30, 30, 30, 30, 30, 0);
+            groupElements.Add(line11);
+
+            LineCoordinates.SetValuesForTag(line12, 30, 30, 0, 20, 40, 0);
+            groupElements.Add(line12);
+
+            LineCoordinates.SetValuesForTag(line13, 30, 30, 0, 0, 30, 0);
+            groupElements.Add(line13);
+
+            LineCoordinates.SetValuesForTag(line14, 0, 30, 0, 20, 40, 0);
+            groupElements.Add(line14);
+
+            LineCoordinates.SetValuesForTag(line15, 0, 30, 0, 0, 30, 30);
+            groupElements.Add(line15);
+
+            LineCoordinates.SetValuesForTag(line16, 0, 30, 30, 20, 40, 30);
+            groupElements.Add(line16);
+
+            LineCoordinates.SetValuesForTag(line17, 20, 40, 30, 20, 40, 0);
+            groupElements.Add(line17);
+
+            DrawingCanvas.Children.Clear();
+            foreach (Line element in groupElements)
+            {
+                element.Stroke = lineColor;
+                element.StrokeThickness = lineThickness;
+                DrawingCanvas.Children.Add(element);
+            }
+
+            RedrawLines();
+        }
+
+        private void LineBy3DPoints_Click(object sender, RoutedEventArgs e)
+        {
+            LineBy3DPoints lineBy3DPoints = new LineBy3DPoints();
+            lineBy3DPoints.ShowDialog();
+
+            double x1 = lineBy3DPoints.X1;
+            double y1 = lineBy3DPoints.Y1;
+            double z1 = lineBy3DPoints.Z1;
+            double x2 = lineBy3DPoints.X2;
+            double y2 = lineBy3DPoints.Y2;
+            double z2 = lineBy3DPoints.Z2;
+
+            Line createdLine = new Line
+            {
+                X1 = 0,
+                Y1 = 0,
+                X2 = 0,
+                Y2 = 0,
+                Stroke = lineColor,
+                StrokeThickness = lineThickness,
+            };
+
+            LineCoordinates.SetValuesForTag(createdLine, x1, y1, z1, x2, y2, z2);
+            DrawingCanvas.Children.Add(createdLine);
+
+            RedrawLines();
         }
     }
 }
